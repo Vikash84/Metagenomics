@@ -1,0 +1,44 @@
+# Taken from http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/
+
+# Convert a multi-line fasta to a singleline fasta
+
+awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' sample1.fa > sample1_singleline.fa
+ 
+
+# To convert a fastq file to fasta in a single line using sed
+
+sed '/^@/!d;s//>/;N' sample1.fq > sample1.fa
+ 
+# Dirty way to count the number of sequences in a fastq
+
+grep -c '^@' sample1.fq
+
+#It’s dirty because sometimes the quality information line may also start with “@” so the number of sequences could be overestimated.
+# A more precise way is to count the lines and divide by four:
+
+cat sample1.fq | echo $((`wc -l`/4))
+
+# One liner to remove the description information from a fasta file and just keep the identifier
+
+perl -p -i -e 's/>(.+?) .+/>$1/g' sample1.fa
+ 
+# Get all the identifier names from a fasta file
+
+perl -ne 'if(/^>(\S+)/){print "$1\n"}' sample1.fa
+ 
+# Extract sequences by their ID from a fasta file
+# For example, you want to get the sequences with id1 and id2 as identifiers
+
+perl -ne 'if(/^>(\S+)/){$c=grep{/^$1$/}qw(id1 id2)}print if $c' sample1.fa
+
+# If you have a long list of identifiers in a file called ids.txt, then the following should do the trick:
+
+perl -ne 'if(/^>(\S+)/){$c=$i{$1}}$c?print:chomp;$i{$_}=1 if @ARGV' ids.txt sample1.fa
+ 
+# Convert from a two column text tab-delimited file (ID and sequence) to a fasta file
+
+awk -vOFS='' '{print ">",$1,"\n",$2,"\n";}' two_column_sample_tab.txt > sample1.fa
+ 
+# Get the length of a fasta sequence (the sequence must in singleline)
+
+cat sample1_singleline.fa | awk 'NR%2==0' | awk '{print length($1)}'
