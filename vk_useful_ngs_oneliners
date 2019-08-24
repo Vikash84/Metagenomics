@@ -1,5 +1,13 @@
 # Taken from http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/
 
+# Trinity assembly cpmmand
+
+for i in *R1_paired_trimmed.fastq.gz;do Trinity --seqType fq --left $i,${i/paired/single} --right ${i/_R1/_R2},${i/R1_paired/R2_single} --max_memory 10G --CPU 50 --output ${i/_R1*/.trinity_out};done
+
+# blastn command
+
+for i in *trinity_out;do blastn -query $i/inchworm.K25.L25.DS.fa -db ~/softwares/ncbi_database/reovirus/reovirus.fasta -out `basename ${i/out/blastn2}` -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 5 -num_threads 50;done
+
 # Convert a multi-line fasta to a singleline fasta
 
 awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' sample1.fa > sample1_singleline.fa
