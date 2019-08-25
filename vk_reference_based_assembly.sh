@@ -11,8 +11,7 @@ samtools sort -O bam -T temp1 $sample_prefix'.sam' >| $sample_prefix'.bam'
 #samtools index
 samtools index $sample_prefix'.bam'
 #samtools mpileup
-samtools mpileup -f 1045684451.fasta -gu $sample_prefix'.bam' | bcftools call -c -O b -o
-$sample_prefix'.raw.bcf'
+samtools mpileup -f 1045684451.fasta -gu $sample_prefix'.bam' | bcftools call -c -O b -o $sample_prefix'.raw.bcf'
 #convert file to fastq format
 bcftools view -O v $sample_prefix'.raw.bcf' | vcfutils.pl vcf2fq > $sample_prefix'.fastq'
 #convert fastq to fasta
