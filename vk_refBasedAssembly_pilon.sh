@@ -84,4 +84,4 @@ do
     -f $ref_fasta $i | bcftools call -c | vcfutils.pl vcf2fq | seqtk seq -a - > ${i/bam/consensus.fa}
 done
 
-/home/vsingh/miniconda3/envs/assembly/bin/java -Xmx100G -jar /home/vsingh/miniconda3/envs/assembly/share/pilon-1.23-0/pilon-1.23.jar --genome $2 --fix all --changes --frags *.bam --threads 50 --output Pilon_round2
+for i in *bam;do /home/vsingh/miniconda3/envs/assembly/bin/java -Xmx100G -jar /home/vsingh/miniconda3/envs/assembly/share/pilon-1.23-0/pilon-1.23.jar --genome $2 --fix all --changes --frags $i --threads 50 --output ${i/bam/Pilon_round2};done
