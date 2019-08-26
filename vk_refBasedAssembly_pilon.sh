@@ -79,9 +79,11 @@ done
 for i in *.bam
 do 
     [ ! -f ${i/bam/consensus.fa} ] \
-    && samtools mpileup \
+    && samtools mpileup --max-depth 10000 \
     -ud 1000 \
     -f $ref_fasta $i | bcftools call -c | vcfutils.pl vcf2fq | seqtk seq -a - > ${i/bam/consensus.fa}
 done
+
+# bcftools mpileup --max-depth 10000 -Ou -ABf vaccine.fasta D19-028511-1_VRIS_S1.bam | bcftools call -c -p 0.05 -P 1.1e-5 | vcfutils.pl vcf2fq | seqtk seq -a - > mapped.fasta
 
 for i in *bam;do /home/vsingh/miniconda3/envs/assembly/bin/java -Xmx100G -jar /home/vsingh/miniconda3/envs/assembly/share/pilon-1.23-0/pilon-1.23.jar --genome $2 --fix all --changes --frags $i --threads 50 --output ${i/bam/Pilon_round2};done
