@@ -1,5 +1,9 @@
 # Taken from http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/
 
+# fasta to tab
+
+for i in *fasta; do perl -e ' $count=0; $len=0; while(<>) { s/\r?\n//; s/\t/ /g; if (s/^>//) { if ($. != 1) { print "\n" } s/ |$/\t/; $count++; $_ .= "\t"; } else { s/ //g; $len += length($_) } print $_; } print "\n"; warn "\nConverted $count FASTA records in $. lines to tabular format\nTotal sequence length: $len\n\n"; ' $i > `basename ${i/fasta/fasta.tab}`;done 
+
 # Trinity assembly cpmmand
 
 for i in *R1_paired_trimmed.fastq.gz;do Trinity --seqType fq --left $i,${i/paired/single} --right ${i/_R1/_R2},${i/R1_paired/R2_single} --max_memory 10G --CPU 50 --output ${i/_R1*/.trinity_out};done
