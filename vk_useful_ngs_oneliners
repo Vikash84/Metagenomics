@@ -1,5 +1,8 @@
 # Taken from http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/
 
+#replace by matching ids file in fasta file
+awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' Seg1_PB2_T_Lineage.ids Seg1_PB2_T_Lineage.fasta
+
 # lower case fasta to UPPERCASE fasta
 
 awk 'BEGIN{FS=" "}{if(!/>/){print toupper($0)}else{print $1}}' in.fasta > out.fasta
