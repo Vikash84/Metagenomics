@@ -3,6 +3,22 @@
 #replace by matching ids file in fasta file
 awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' Seg1_PB2_T_Lineage.ids Seg1_PB2_T_Lineage.fasta
 
+    Explanation:
+
+      FNR==NR { ... }   # FNR is the current record number, NR is the record number
+                        # so FNR==NR simply means: "while we process the first file listed
+                        # in this case it's "master.txt"
+      array[$1]=$2      # add column 1 to an array with a value of column 2
+      next              # go onto the next record
+
+      {                 # this could be written as: FNR!=NR
+                        # so this means "while we process the second file listed..."
+      for (i in array)  # means "for every element/key in the array..."
+      gsub(i, array[i]) # perform a global substitution on each line replacing the key
+                        # with it's value if found
+      }1                # this is shorthand for 'print'
+
+
 # lower case fasta to UPPERCASE fasta
 
 awk 'BEGIN{FS=" "}{if(!/>/){print toupper($0)}else{print $1}}' in.fasta > out.fasta
