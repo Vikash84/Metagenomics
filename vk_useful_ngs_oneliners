@@ -5,6 +5,10 @@
 conda install -c bioconda bcl2fastq-nextseq
 bcl_to_fastq --runfolder ./190827_NB551648_0010_AH2C2JBGXB
 
+# make expression matrix from multiple file htseq
+
+awk '{arr[$1]=arr[$1]"\t"$2}END{for(i in arr)print i,arr[i]}' *count.txt >> merged_htseq_counts.tsv
+
 #replace by matching ids file in fasta file
 awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' Seg1_PB2_T_Lineage.ids Seg1_PB2_T_Lineage.fasta
 
