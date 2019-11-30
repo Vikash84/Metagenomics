@@ -1,0 +1,4 @@
+diamond blastx -p 10 -d ~/softwares/ncbi_database/virus_proteome/viral_refseq.fa.dmnd -q M19.025611.inchworm.K25.L25.DS.fa -f 100 -o ./test
+sudo /opt/megan/tools/daa2rma --in ../Mor_Project_129/test2.daa --out testmm.rma -mdb megan-map-Oct2019.db
+sudo /opt/megan/tools/rma2info --in test.rma --class2count Taxonomy --paths --names > tt
+sudo /opt/megan/tools/rma2info --in test.rma --class2count Taxonomy --paths --names -r2c Taxonomy > tt
