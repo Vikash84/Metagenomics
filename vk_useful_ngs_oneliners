@@ -90,3 +90,7 @@ awk -vOFS='' '{print ">",$1,"\n",$2,"\n";}' two_column_sample_tab.txt > sample1.
 # Get the length of a fasta sequence (the sequence must in singleline)
 
 cat sample1_singleline.fa | awk 'NR%2==0' | awk '{print length($1)}'
+
+
+##Ssuis rerotyping
+srst2 --input_pe *fastq.gz --forward _R1_001 --reverse _R2_001 --output SsuisSerotype --log --mlst_db ../Ssuis_Serotyping.fasta --mlst_definitions ../Ssuis_Serotyping_Definitions.txt
