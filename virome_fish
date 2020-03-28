@@ -1,1 +1,10 @@
 perl vk_metagenomics_pipeline_v0.2.3.pl --CPU=10 --MEM=16 --READ-TYPE=1 --SAMPLE-PATH=/home/vsingh/softwares/auto_metaviromics/pipeline/data/J-8_S7_L001 --MOSQ-NAME=fish --DATE=20-01-2020 --LOCATION=us --FILTERING=yes --HOST-DB=/home/vsingh/softwares/ncbi_database/carp_genome/carp_CDS_mRNA_genome --RNA-DB=/home/vsingh/softwares/ncbi_database/carp_genome/carp_CDS_mRNA_genome --ASSEMBLING=yes --ASSEMBLER=megahit --ASSEMBLE-OUTPUT --VIRAL-CONTIG-SEARCH --VIRFINDER-MODEL --READ-MAPPING --ORF-PRED --DIAMOND-DB --LINEAGE
+
+
+#####
+for i in *withAbundance;do awk -F"\t" 'NR>1{print$22"\t"$3}' $i | awk -F"\t" '{a[$1]+=$2}END{for (i in a) print i"\t"a[i]}' | sort -k1,1 > ${i/blastx*/familyWiseAbundance};done
+
+
+
+#####
+awk -f vk_joiner.awk black_crappie.contigs.familyWiseAbundance blue_gill.contigs.familyWiseAbundance bull_head.contigs.familyWiseAbundance carp_healthy_merged.contigs.familyWiseAbundance carp_fishkill_merged.contigs.familyWiseAbundance gizzard_shad.contigs.familyWiseAbundance gold_fish.contigs.familyWiseAbundance large_mouth_bass.contigs.familyWiseAbundance northern_pike.contigs.familyWiseAbundance pumpkinseed.contigs.familyWiseAbundance tiger_muskie.contigs.familyWiseAbundance white_bass.contigs.familyWiseAbundance yellow_perch.contigs.familyWiseAbundance > merged_counts.familyWiseAbundance.tsv
