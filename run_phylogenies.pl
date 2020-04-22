@@ -7,6 +7,7 @@ use strict; use warnings; use Getopt::Long qw(GetOptions);
 
 ## Defining options
 my $options = <<"OPTIONS";
+
 NAME		$name
 VERSION		$version
 SYNOPSIS	Quick phylogenetic pipeline based on MAFFT, TRIMAL and IQ-TREE
@@ -15,9 +16,11 @@ REQUIREMENTS	MAFFT - https://mafft.cbrc.jp/alignment/software/ (doi: 10.1093/bio
 		IQTREE - http://www.iqtree.org/ (doi: 10.1093/molbev/msu300)
 		
 USAGE		run_phylogenies.pl -t 10 -f *.fasta
+
 OPTIONS:
 -t (--threads)	Number of threads to use [Default: 10]
 -f (--fasta)	Files in Multifasta format
+
 ## MAFFT, TRIMAL and IQ-TREE command lines can be edited at the bottom of this script
 OPTIONS
 die "$options\n" unless @ARGV;
