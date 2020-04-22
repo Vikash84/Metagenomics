@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-# Pombert lab 2019
 my $version = '0.2';
 my $name = 'run_phylogenies.pl';
 
