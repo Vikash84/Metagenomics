@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-## Pombert Lab, 2018
 ## This script generates a distribution of sequences per species, genus, family and so forth from taxonomised BLAST output files.
 ## This script was created to handle megablast analyses of nanopore 16S amplicon sequencing.
 ## Because of the error-rate of the nanopore sequencing, identification at the species/subspecies level can be ambiguous and should not be taken at face value.
