@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jan 12 06:56:16 2019
-
-@author: Chris
-"""
-#credited:
-#https://stackoverflow.com/questions/9234560/find-all-csv-files-in-a-directory-using-python/12280052
-
 import os
 import glob
 import pandas as pd
