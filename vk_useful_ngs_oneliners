@@ -97,7 +97,7 @@ cat sample1_singleline.fa | awk 'NR%2==0' | awk '{print length($1)}'
 
 ## Minion Kraken2 analysis
 
-for i in fastq_pass/*fastq;do kraken2 --db minikrake2_db/minikraken2_v2_8GB_201904_UPDATE --threads 50 $i --report `basename ${i/.fastq/.report.txt}` --output `basename ${i/.fastq/.output}`;done
+for i in fastq_pass/*fastq;do kraken2 --db ~/softwares/minikrake2_db/minikraken2_v2_8GB_201904_UPDATE --threads 50 $i --report `basename ${i/.fastq/.report.txt}` --output `basename ${i/.fastq/.output}`;done
 
 ##Ssuis serotyping
 srst2 --input_pe *fastq.gz --forward _R1_001 --reverse _R2_001 --output SsuisSerotype --log --mlst_db ../Ssuis_Serotyping.fasta --mlst_definitions ../Ssuis_Serotyping_Definitions.txt
