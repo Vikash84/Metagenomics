@@ -26,6 +26,10 @@ awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' Seg
       gsub(i, array[i]) # perform a global substitution on each line replacing the key
                         # with it's value if found
       }1                # this is shorthand for 'print'
+      
+      
+# replace by matching ids file in fasta file (V2)
+ awk 'FNR==NR{  a[">"$1]=$2;next}$1 in a{  sub(/>/,">"a[$1]"|",$1)}1' D20-012995-2.tanoti.blastn2.ids.2.3 D20-012995-2.tanoti.sorted.fasta | cut -d"|" -f1 > output.fasta
 
 
 # lower case fasta to UPPERCASE fasta
