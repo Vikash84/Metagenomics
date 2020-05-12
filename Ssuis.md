@@ -7,6 +7,8 @@ blastn -task blastn-short -query Hparasuis_sero_primers.fasta -db HPS.all_merged
 
 
 
-###SSuis Analysis
+#SSuis Analysis
 
+```bash
 #nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtree_slow --taxoner centrifuge --name ssuis_analysis --ref Ssuis_ref.fa --input samples.tab --outdir results
+```
