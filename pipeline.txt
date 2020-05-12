@@ -1,0 +1,121 @@
+#### Preparation
+##For connection to Putty 
+#host name 
+jpb-coursenode.sydneyuni.cloud
+
+## Mac terminal - Log in to cloud instance from mac terminal - ****replace your <username> with your username****
+ssh <username>@jpb-coursenode.sydneyuni.cloud 
+
+##View couse directories
+ls /course
+## Move to working dir
+cd ~
+
+##Define variables
+Name=microplus ## Define variable for stem name of file and subsequent output files
+inpath=/course/data ## set variable for dir containing fq input file
+dbnt=/course/data/databases ## Set variable for path to databases
+dbnr=/course/data/databases/diamond ## Define variable for path to diamond nr database 
+access2taxid=/course/data/databases ## Define variable for path to prot.accession2taxid db
+taxonomist=/course/bin/simbiont/ncbi/tools ## Define variable for path to ncbi.taxonomist.py
+
+#check
+echo $taxonomist
+
+## Data observation
+less $inpath/"$Name".fq ### Explain what is "read". Use arrow key to scroll through file, type q to quit
+
+#### Task 1. Assembly
+megahit --num-cpu-threads 2 --memory 0.1 -r $inpath/"$Name".fq -o "$Name"_out ### assembly using megahit
+cat ./"$Name"_out/final.contigs.fa | sed "s/=//g" | sed "s/ /_/g" > "$Name".contigs.fa ### edit the contig name for later blast analyses
+less "$Name".contigs.fa ### Visualize the assembly result
+
+#### Task 2. Annotation
+### Task 2.1 nt annotation
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz ## Download taxonomy database for nt analyses
+tar -zxvf taxdb.tar.gz ## Decompress
+blastn -query "$Name".contigs.fa -db $dbnt/nt -out "$Name".contigs.fa.nt -evalue 1E-10 -max_target_seqs 1 -num_threads 2 -outfmt "6 qseqid sacc salltitles pident length evalue sskingdoms" ## blastn. Remove -max_target_seqs 1 when running on real datasets
+awk -F$'\t' '!seen[$1]++' "$Name".contigs.fa.nt > "$Name".contigs.fa.nt.topHit ## save only the best hit for each contig
+less "$Name".contigs.fa.nt.topHit ## view results
+grep "Viruses" "$Name".contigs.fa.nt.topHit ## Show virus hits
+grep "Bacteria" "$Name".contigs.fa.nt.topHit ## Show bacteria hits
+grep "Eukaryota" "$Name".contigs.fa.nt.topHit ## Show eukaryotic hits
+
+### Task 2.2 nr annotation
+diamond blastx -q "$Name".contigs.fa -d $dbnr/nr -o "$Name".contigs.fa.nr -e 1E-10 -k 1 -p 2 -f 6 qseqid qlen sseqid stitle pident length evalue ## Diamond blast against nr database. Remove -k 1 when running on real datasets
+awk -F$'\t' '!seen[$1]++' "$Name".contigs.fa.nr > "$Name".contigs.fa.nr.tophit ## keep only top hit 
+grep -i "\[.*virus" "$Name".contigs.fa.nr.tophit ## Show viruses in nr blast result
+
+### Task 2.3 taxonomy lineage annotation
+cat "$Name".contigs.fa.nr.tophit | cut -f3 | sort -u | grep -v "^[0-9]" | grep -v -e '^$' > "$Name".accession_list.txt  ## make accession list
+## Create taxonomy ID table and list, and retrieve taxonomy lineage
+grep -F -f "$Name".accession_list.txt $access2taxid/prot.accession2taxid | tee "$Name".taxid_table.txt  | cut -f3 -d$'\t' | sort -u | tee "$Name".taxid_list.txt | python3 $taxonomist/ncbi.taxonomist.py --sep "|" -d | sed "s/|/\t/" > "$Name".lineage_table.txt
+
+## Adding taxonomy lineage to nr blast results
+#Note - can't use variables in sqlite3, therefore use complete file name within sqlite3
+
+sqlite3 "$Name".sql 
+
+CREATE TABLE lineage (taxonomyid INT, taxlineage CHAR); 
+CREATE TABLE taxid (accession CHAR, accession2 CHAR, taxonomyid INT, GI INT);
+CREATE TABLE blast (reads CHAR, length INT, accession2 CHAR, blasthit CHAR, pident_nt FLOAT, hitlength INT, evalue FLOAT);
+
+.mode tabs
+.import ./microplus.lineage_table.txt lineage
+.import ./microplus.taxid_table.txt taxid
+.import ./microplus.contigs.fa.nr.tophit blast
+
+CREATE TABLE taxid_lineage (accession2 CHAR, taxlineage CHAR); 
+INSERT INTO taxid_lineage SELECT taxid.accession2, lineage.taxlineage FROM taxid LEFT JOIN lineage ON taxid.taxonomyid=lineage.taxonomyid;
+
+CREATE TABLE blast_taxid_lineage (reads CHAR, length INT, accession2 CHAR, blasthit CHAR, pident_nt FLOAT, hitlength INT, evalue FLOAT, taxlineage CHAR); 
+INSERT INTO blast_taxid_lineage SELECT blast.*, taxid_lineage.taxlineage FROM blast LEFT JOIN taxid_lineage ON blast.accession2=taxid_lineage.accession2;
+
+.output microplus.contigs.fa.nr.tophit.edited
+SELECT rowid, blast_taxid_lineage.* FROM blast_taxid_lineage;
+.output stdout
+.exit
+
+less "$Name".contigs.fa.nr.tophit.edited ## Checking table with taxonomy info added
+
+#### Task 3. Estimate abundance by mapping
+## Extract virus sequences
+grep "Viruses" "$Name".contigs.fa.nr.tophit.edited | cut -f2 | sort -u > "$Name"_VirusContigs_list.txt ## Get list of contigs with "Virus" in taxonomy lineage
+seqtk subseq "$Name".contigs.fa "$Name"_VirusContigs_list.txt > "$Name".contigs.fa.virusHit.fa ## Get fasta sequences of contigs with "Virus" in taxonomy lineage
+
+## Mapping
+bowtie2-build "$Name".contigs.fa.virusHit.fa reference ## build reference index
+bowtie2 --local --threads 2 -x reference -U $inpath/"$Name".fq -S "$Name".sam 
+samtools view -bSF4 "$Name".sam > "$Name".bam 
+samtools sort -@ 20 "$Name".bam > "$Name".sorted.bam 
+samtools index "$Name".sorted.bam 
+samtools idxstats "$Name".sorted.bam > "$Name"_mapping.txt 
+
+## Check abundance info
+less "$Name"_mapping.txt
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+####Requirements to set up this pipeline on own server
+##Create a database dir and download nt, nr and prot.accession2taxid databases into this dir
+wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz ##database of accessions and taxids
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/nt*gz ##nt database in blast format, ready for use once decompressed
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/nt*md5 ##File to confirm integrity of nt database file
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz ##nr database in fasta format, needs to be "made" for diamond
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz.md5 ##File to confirm integrity nr database file
+for file in `ls *.gz.md5`; do md5sum -c $file; done;	##check file integrity - should print "OK"
+for file in `ls *.gz`; do gunzip -d $file; done;      ##Decompress
+for file in `ls *tar`; do tar -xvpf ./$file; done;	##Decompress
+diamond makedb --in nr -d nr  ##make nr database (format nr database for diamond)
+rm *.gz.md5 #remove md5 files
+##Download and install required software/programs (install ncbi-taxonomist in bin)
+	#megahit: https://github.com/voutcn/megahit
+	#blast+: https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download
+	#diamond: https://github.com/bbuchfink/diamond
+	#python3: https://www.python.org/download/releases/3.0/
+	#sqlite3: https://sqlite.org/index.html
+	#seqtk: https://github.com/lh3/seqtk
+	#ncbi-taxonomist: https://gitlab.com/janpb/simbiont (course branch):
+	git clone --recurse-submodules -b course https://gitlab.com/janpb/simbiont.git
+	#bowtie2: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+	#samtools: http://samtools.sourceforge.net
+##Edit variables in pipeline script according to input file names and local setup for paths
