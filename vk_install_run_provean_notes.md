@@ -1,5 +1,7 @@
 Notes from work installing and running Provean to predict protein impact of variants. Provean input files were produced based on VEP output using commands below. Some trial runs were completed using a computer to understand how quickly Provean can be run in parallel to work through all annotated genes.
 
+https://gist.github.com/darencard/d3ff1399f1fa05b35429eb148383aea4
+
 ```bash
 # running PROVEAN
 
