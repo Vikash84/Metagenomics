@@ -104,3 +104,7 @@ srst2 --input_pe *fastq.gz --forward _R1_001 --reverse _R2_001 --output SsuisSer
 
 ##Ssuis serotyping 2
 ./Ssuis_serotypingPipeline.pl --fastq_directory /home/vsingh/vdl/Mor_Project_147/serotyping_github/SsuisSerotyping_pipeline/SsuisSerotyping_pipeline/data --forward _R1_001 --reverse _R2_001 --ends pe
+
+
+
+for i in ../03-NanoFilt/*fastq;do flye --nano-raw $i --genome-size 5m --meta --threads 50 --min-overlap 1000 --out-dir `basename ${i/_nanofilt*}`;done
