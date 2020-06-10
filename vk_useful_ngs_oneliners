@@ -108,3 +108,7 @@ srst2 --input_pe *fastq.gz --forward _R1_001 --reverse _R2_001 --output SsuisSer
 
 
 for i in ../03-NanoFilt/*fastq;do flye --nano-raw $i --genome-size 5m --meta --threads 50 --min-overlap 1000 --out-dir `basename ${i/_nanofilt*}`;done
+
+
+
+grep -i "\[.*virus" ../D20.014264.1repeat.blastx | awk -F$'\t' '!seen[$1]++' | cut -d "[" -f2 | sed "s/\].*//g" | sort | uniq -c | sed "s/^ \+//g" |sed -e "s/ /$(printf '\t')/" | sort -k1,1nr | less
