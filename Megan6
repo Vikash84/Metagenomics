@@ -3,4 +3,4 @@ sudo /opt/megan/tools/daa2rma --in ../Mor_Project_129/test2.daa --out testmm.rma
 sudo /opt/megan/tools/rma2info --in test.rma --class2count Taxonomy --paths --names > tt
 sudo /opt/megan/tools/rma2info --in test.rma --class2count Taxonomy --paths --names -r2c Taxonomy > tt
 
-sudo /opt/megan/tools/daa2rma -lg -top 10 -supp 0 -sup 0 -alg longReads --in Co_Assembly.daa --out Co_Assembly.daa.rma6 -mdb ~/vdl/Mor_Project_130/megan-map-Oct2019.db
+sudo /opt/megan/tools/daa2rma -lg -top 10 -supp 0 -sup 0 -alg longReads --in Co_Assembly.daa --out Co_Assembly.daa.rma6 -mdb /home/vsingh/softwares/ncbi_database/megan-map-Oct2019.db
