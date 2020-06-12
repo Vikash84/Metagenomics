@@ -112,3 +112,8 @@ for i in ../03-NanoFilt/*fastq;do flye --nano-raw $i --genome-size 5m --meta --t
 
 
 grep -i "\[.*virus" ../D20.014264.1repeat.blastx | awk -F$'\t' '!seen[$1]++' | cut -d "[" -f2 | sed "s/\].*//g" | sort | uniq -c | sed "s/^ \+//g" |sed -e "s/ /$(printf '\t')/" | sort -k1,1nr | less
+
+
+## Refrence based assembly
+tanoti -P 50 -p 1 -r KHV.fasta -i D20-007170-KHV_VRIS_S4_R1_001.fastq D20-007170-KHV_VRIS_S4_R2_001.fastq -o tanoti.sam
+python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i tanoti.sam -o tanoti.fasta
