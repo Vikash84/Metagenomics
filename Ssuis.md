@@ -27,7 +27,7 @@ nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtree_slow --tax
 `` bash
 for i in *L001_R1_001.fastq;do mv $i ${i/L001_R1_001.fastq/R1_001.fastq};done
 for i in *L001_R2_001.fastq;do mv $i ${i/L001_R2_001.fastq/R2_001.fastq};done
-``
+```
 ```bash
 ./Ssuis_serotypingPipeline.pl --fastq_directory /home/vsingh/vdl/Mor_Project_147/serotyping_github/SsuisSerotyping_pipeline/SsuisSerotyping_pipeline/data --forward _R1_001 --reverse _R2_001 --ends pe
 ```
