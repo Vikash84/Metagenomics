@@ -8,7 +8,7 @@ for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >
 
 ### Running pipeline
 ```bash
-nullarbor.pl --cpus 50 --run --trim --mlst hparasuis --treebuilder iqtree_slow --taxoner centrifuge --name Hparasuis_analysis --ref ref.fasta --input samples.tab --outdir results
+PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst hparasuis --treebuilder iqtree_slow --taxoner centrifuge --name Hparasuis_analysis --ref ref.fasta --input samples.tab --outdir results
 ```
 
 ### Serotyping
@@ -20,7 +20,7 @@ blastn -task blastn-short -query Hparasuis_sero_primers.fasta -db HPS.all_merged
 
 # SSuis Analysis
 ```bash
-nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtree_slow --taxoner centrifuge --name ssuis_analysis --ref Ssuis_ref.fa --input samples.tab --outdir results
+PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtree_slow --taxoner centrifuge --name ssuis_analysis --ref Ssuis_ref.fa --input samples.tab --outdir results
 ```
 ### Ssuis serotyping
 ```bash
