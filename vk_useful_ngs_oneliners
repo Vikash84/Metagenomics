@@ -121,3 +121,6 @@ python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -
 
 ##Lazypipe virome
 perl vk_pipeline_trinity.pl -1 /home/vsingh/softwares/lazypipe/data/D20-012995_S10_R1_001.fastq.gz -2 /home/vsingh/softwares/lazypipe/data/D20-012995_S10_R2_001.fastq.gz --hostgen /home/vsingh/softwares/lazypipe/genomes_host/pig_genomic.fna.gz --res /home/vsingh/softwares/lazypipe --label D20-012995-3 --numth 50 --inlen 300 --ass trinity --gen mga --ann sans --pipe 1:7,9:11
+
+## multiple fasta to indivisual fasta
+cat cat_sigma-C_aligned_nogaps.fasta | awk '{if (substr($0, 1, 1)==">") {filename=(substr($0,2) ".fa")}print $0 > filename}'
