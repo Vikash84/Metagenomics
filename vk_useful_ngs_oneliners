@@ -54,11 +54,7 @@ for i in $WorkDir/*ASM_out; do diamond blastx -d $3 -q $i/scaffolds.fasta -f 6 q
 
 # Convert a multi-line fasta to a singleline fasta
 
-awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' sample1.fa > sample1_singleline.fa
-
-# metaplan2
-for i in *R1_001.fastq.gz;do metaphlan2.py $i,${i/R1/R2} -o ${i/_R1*/.txt} --input_type multifastq --nproc 50 --bowtie2out ${i/_R1*/.bz2};done
- 
+awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' sample1.fa > sample1_singleline.fa 
 
 # To convert a fastq file to fasta in a single line using sed
 
@@ -129,3 +125,7 @@ for i in /home/vsingh/vdl/Mor_Project_158/prrsv/*R1_001.fastq.gz;do perl vk_pipe
 
 ## multiple fasta to indivisual fasta
 cat cat_sigma-C_aligned_nogaps.fasta | awk '{if (substr($0, 1, 1)==">") {filename=(substr($0,2) ".fa")}print $0 > filename}'
+
+# metaplan2
+for i in *R1_001.fastq.gz;do metaphlan2.py $i,${i/R1/R2} -o ${i/_R1*/.txt} --input_type multifastq --nproc 50 --bowtie2out ${i/_R1*/.bz2};done
+
