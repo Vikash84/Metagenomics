@@ -132,3 +132,7 @@ for i in *R1_001.fastq.gz;do metaphlan2.py $i,${i/R1/R2} -o ${i/_R1*/.txt} --inp
 ## Extract text between words (e.g. w1,w2)
 grep -o -P '(?<=w1).*(?=w2)'
 
+## Arrangin fasta file in order
+samtools faidx sequences.fasta
+samtools faidx sequences.fasta $(cat order.txt) > sequences.reordered.fasta
+
