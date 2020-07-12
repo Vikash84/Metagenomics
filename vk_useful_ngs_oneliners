@@ -129,3 +129,6 @@ cat cat_sigma-C_aligned_nogaps.fasta | awk '{if (substr($0, 1, 1)==">") {filenam
 # metaplan2
 for i in *R1_001.fastq.gz;do metaphlan2.py $i,${i/R1/R2} -o ${i/_R1*/.txt} --input_type multifastq --nproc 50 --bowtie2out ${i/_R1*/.bz2};done
 
+## Extract text between words (e.g. w1,w2)
+grep -o -P '(?<=w1).*(?=w2)'
+
