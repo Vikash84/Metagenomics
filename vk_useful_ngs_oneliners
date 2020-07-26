@@ -136,3 +136,6 @@ grep -o -P '(?<=w1).*(?=w2)'
 samtools faidx sequences.fasta
 samtools faidx sequences.fasta $(cat order.txt) > sequences.reordered.fasta
 
+##prokka annotation
+prokka --kingdom viruses --genus Cyprinivirus --species "Cyprinid herpesvirus 3" --strain MN-2020 --prefix D20-007170-KHV --outdir D20-007170-KHV_annotation2 --locustag D20-007170-KHV D20-007170-KHV_VRIS_S4.Pilon.fasta
+
