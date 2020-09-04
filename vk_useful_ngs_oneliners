@@ -153,5 +153,7 @@ singularity pull shub://photocyte/guppy_gpu_singularity
 
 singularity exec --nv guppy_gpu_singularity_latest.sif guppy_basecaller --help
 
+                      OR
+https://www.chpc.utah.edu/documentation/software/singularity.php
 
 
