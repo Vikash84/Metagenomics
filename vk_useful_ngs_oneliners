@@ -145,4 +145,13 @@ nextflow run -r 1.1.2 nf-core/ampliseq -profile docker --reads "/Users/vikashsin
 ##Reovirus
 sort -k2,2nr -k3,3nr D20-019670-17_VRIS_S3.blastx | awk -F"\t" '!seen[$1]++' | sort -k4,4 -k2,2nr | grep -i orthoreo | awk -F"\t" '!seen[$4]++' | sort -k2,2nr |awk '{if($2 > 900){print $0}}'| less
 
+##guppy singularity
+
+cd ~/softwares
+
+singularity pull shub://photocyte/guppy_gpu_singularity
+
+singularity exec --nv guppy_gpu_singularity_latest.sif guppy_basecaller --help
+
+
 
