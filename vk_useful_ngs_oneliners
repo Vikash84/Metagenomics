@@ -166,3 +166,12 @@ nextflow run angelovangel/nextflow-kraken2 --fqpattern *_R{1,2}_001.fastq.gz --k
 
 ##Virontus viral Oxford Nanopore sequence analysis pipeline
 nextflow run peterk87/nf-virontus -profile singularity --reads "fastq_pass/all.fastq" --ref_fasta ref.fasta --low_coverage 1
+
+## 16S pipeline
+
+git clone https://github.com/h3abionet/16S-rDNA-dada2-pipeline
+
+cd 16S-rDNA-dada2-pipeline
+
+nextflow run main.nf -profile standard --reads="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/fastq/*_R{1,2}_001.fastq.gz" trimFor 24 --trimRev 25 --reference="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/silva_nr_v132_train_set.fa.gz" species="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/silva_species_assignment_v132.fa.gz" --outdir="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/out"
+
