@@ -175,3 +175,6 @@ cd 16S-rDNA-dada2-pipeline
 
 nextflow run main.nf -profile standard --reads="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/fastq/*_R{1,2}_001.fastq.gz" trimFor 24 --trimRev 25 --reference="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/silva_nr_v132_train_set.fa.gz" species="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/silva_species_assignment_v132.fa.gz" --outdir="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/out"
 
+
+sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --kraken_db ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/16S_Greengenes13.5_20200326.tgz --outdir tets --taxlevel S --readlen 250 --ontreads true --fqpattern "*.fastq"
+
