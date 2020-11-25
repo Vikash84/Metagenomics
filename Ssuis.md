@@ -32,6 +32,8 @@ PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtre
 ```
 ### Ssuis serotyping
 ```bash
+git clone https://github.com/streplab/SsuisSerotyping_pipeline.git
+conda activate srst2-env
 for i in *L001_R1_001.fastq;do mv $i ${i/L001_R1_001.fastq/R1_001.fastq};done
 for i in *L001_R2_001.fastq;do mv $i ${i/L001_R2_001.fastq/R2_001.fastq};done
 ```
