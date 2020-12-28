@@ -178,3 +178,9 @@ nextflow run main.nf -profile standard --reads="/home/vsingh/vdl/Mor_Project_163
 
 sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --kraken_db ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/16S_Greengenes13.5_20200326.tgz --outdir tets --taxlevel S --readlen 250 --ontreads true --fqpattern "*.fastq"
 
+
+
+
+## Rota
+for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus B" | awk -F"\t" '{if($15 >= 200){print $0}}' | sort  -k2,2nr -k15,15nr| grep complete|head -1 >> ${i/blastn2/rora-B};done;done
+
