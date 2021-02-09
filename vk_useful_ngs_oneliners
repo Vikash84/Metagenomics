@@ -184,3 +184,5 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 ## Rota
 for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus B" | awk -F"\t" '{if($15 >= 200){print $0}}' | sort  -k2,2nr -k15,15nr| grep complete|head -1 >> ${i/blastn2/rora-B};done;done
 
+docker image rm $(docker image ls -q)
+
