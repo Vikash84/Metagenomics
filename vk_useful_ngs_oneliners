@@ -188,3 +188,11 @@ for i in *blastx;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A 
 
 docker image rm $(docker image ls -q)
 
+## puma papiloma virus annotation
+
+git clone https://github.com/KVD-lab/puma.git
+
+cd puma/data_dir
+
+docker run --rm -v `pwd`/../data_dir:/data -v `pwd`/../input_and_output:/in_out -v `pwd`/../scripts:/script2 kvdlab/puma:1.2.1 /script2/run_puma.py -i /in_out/mallard-duck.fasta -o /in_out/puma_out2 -d /data
+
