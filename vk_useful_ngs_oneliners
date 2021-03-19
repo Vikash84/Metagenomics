@@ -196,3 +196,6 @@ cd puma/data_dir
 
 docker run --rm -v `pwd`/../data_dir:/data -v `pwd`/../input_and_output:/in_out -v `pwd`/../scripts:/script2 kvdlab/puma:1.2.1 /script2/run_puma.py -i /in_out/mallard-duck.fasta -o /in_out/puma_out2 -d /data
 
+##RaxML tree
+./raxml-ng --all --msa toti-orf2-AA.fasta --model LG+G8+F --tree pars{10} --bs-trees 100 --threads 50
+
