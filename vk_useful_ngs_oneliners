@@ -128,6 +128,8 @@ perl vk_pipeline_trinity.pl -1 /home/vsingh/softwares/lazypipe/data/D20-012995_S
 
 for i in /home/vsingh/vdl/Mor_Project_158/prrsv/*R1_001.fastq.gz;do perl vk_pipeline_trinity.pl -1 $i -2 ${i/R1/R2} --hostgen /home/vsingh/softwares/lazypipe/genomes_host/pig_genomic.fna.gz --res /home/vsingh/vdl/Mor_Project_158/prrsv --label `basename ${i/_R1*}` --numth 50 --inlen 300 --ass trinity --gen mgm --ann blastp --pipe 1:3,5:7,9:11;done
 
+for i in /home/vsingh/vdl/Mor_Project_196/VSSW/*R1_001.fastq.gz;do perl vk_pipeline_trinity4.pl -1 $i -2 ${i/R1/R2} --hostgen /home/vsingh/softwares/lazypipe/genomes_host/pig_genomic.fna.gz --res /home/vsingh/vdl/Mor_Project_196/VSSW --label `basename ${i/_R1*}` --numth 50 --inlen 300 --ass trinity --gen mga --ann blastp --pipe 1:3,5:7,9:11;done
+
 ## multiple fasta to indivisual fasta
 cat cat_sigma-C_aligned_nogaps.fasta | awk '{if (substr($0, 1, 1)==">") {filename=(substr($0,2) ".fa")}print $0 > filename}'
 
