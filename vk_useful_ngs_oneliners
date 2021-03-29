@@ -185,10 +185,13 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 
 ## Rota
 for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus B" | awk -F"\t" '{if($15 >= 200){print $0}}' | sort  -k2,2nr -k15,15nr| grep complete|head -1 >> ${i/blastn2/rora-B};done;done
+
 # TRV
 for i in *blastx;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -i "$j" $i | awk -F"\t" '{if($15 >= 200){print $0}}' | sort  -k2,2nr -k15,15nr | head -1 >> ${i}2;done;done
-##flu
 
+##flu
+for i in *out;do blastn -query $i/scaffolds.fasta -db ~/softwares/ncbi_database/flu_database/flu.fasta -out `basename ${i/out/blastn}` -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
+for i in *_blastn;do for j in `seq 1 1 8`; do grep -i "segment $j" $i | awk -F"\t" '$3 >= 50 {print $0}' |head -1 >> ${i/blastn/blastn2};done;done
 for i in *blastn2;do cut -f1,4 $i | grep -o -P '(?<=\)\)).*(?=\()'| cut -d" " -f1,2,3 | sed "s/^ //g" | sed "s/ /-/g" | paste $i - | awk -F"\t" '{print $1"\t"$1"|"$16}' > ${i/blastn2/rep.ids};done
 for i in *blastn2;do vk_correct_orient_fasta_blastn.sh $i ${i/blastn2/out}/scaffolds.fasta;done
 for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/blastn2*/rep.ids} $i > ${i/ASM*/fasta};done
