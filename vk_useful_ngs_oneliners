@@ -207,6 +207,19 @@ for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) g
 rm *corr.fasta
 for i in *fasta;do sed -i "s/>/>${i/_S*/\|}/g" $i;done
 
+## PCV3
+for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
+for i in *trinity_out;do blastn -query $i/inchworm.DS.fa -db ~/softwares/ncbi_database/pcv3_database/PCV3.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
+for i in *blastn;do sort -k2,2nr $i| grep -i "Porcine circovirus 3" | grep -v partial | cut -f4 | cut -d" " -f1 | head -1 >${i/trinity*/epost.ids};done
+for i in *ids;do epost -input $i -db nucleotide | efetch -format fasta > ${i/epost*/PCV3_ref.fasta};done
+pigz -d *gz
+for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/PCV3_ref.fasta} -i $i ${i/R1/R2}  -o ${i/R1*/tanoti.sam};done
+for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
+for i in *tanoti.fasta;do cp $i/*fasta ${i/tanoti*/PCV3.fasta};done
+for i in *PCV3.fasta;do sed -i "s/_tanoti.*/|PCV3/g" $i;done
+
+
+##################################################################################################################################################################
 
 docker image rm $(docker image ls -q)
 
