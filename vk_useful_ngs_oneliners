@@ -198,7 +198,7 @@ for i in *fasta;do sed -i "s/>/>${i/_S*/\|}/g" $i;done
 for i in *fasta;do sed -i "s/(.*)//g" $i;done
 
 ########## TREE MAKING REOVIRUS ###########
-for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt2 | sed "/^--/d" | cut -d"|" -f1 > ${j}.fasta;done
+for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt2 | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
 mkdir concat_tree
 cd concat_tree
 cat ../lambda-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L1.fasta > L1.fasta
@@ -215,6 +215,7 @@ cat ../sigma-NS.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S
 conda activate assembly
 for i in *fasta;do mafft --globalpair --thread 50 --maxiterate 1000 $i > ${i/.fasta/_aligned.fasta};done
 for i in *aligned.fasta;do trimal -in $i -out ${i/.fasta/_nogaps.fasta} -gt 0.6;done
+for i in *nogaps.fasta;do ~/softwares/raxml-ng/build/raxml-ng --all --msa $i --model GTR+G --tree pars{10} --bs-trees 100 --threads 50;done
 mkdir cocat_tree2
 mv *nogaps.fasta cocat-tree/
 cd cocat_tree2
