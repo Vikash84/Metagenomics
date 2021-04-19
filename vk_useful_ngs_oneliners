@@ -196,6 +196,30 @@ for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) g
 rm *corr.fasta
 for i in *fasta;do sed -i "s/>/>${i/_S*/\|}/g" $i;done
 
+########## TREE MAKING REOVIRUS ###########
+for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt2 | sed "/^--/d" | cut -d"|" -f1 > ${j}.fasta;done
+mkdir concat_tree
+cd concat_tree
+cat lambda-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L1.fasta > L1.fasta
+cat lambda-B.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L2.fasta > L2.fasta
+cat lambda-C.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L3.fasta > L3.fasta
+cat mu-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/M1.fasta > M1.fasta
+cat mu-B.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/M2.fasta > M2.fasta
+cat mu-NS.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/M3.fasta > M3.fasta
+cat sigma-C.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S1.fasta > S1.fasta
+cat sigma-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S2.fasta > S2.fasta
+cat sigma-B.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S3.fasta > S3.fasta
+cat sigma-NS.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S4.fasta > S4.fasta
+  
+conda activate assembly
+for i in *fasta;do mafft --globalpair --thread 50 --maxiterate 1000 $i > ${i/.fasta/_aligned.fasta};done
+for i in *aligned.fasta;do trimal -in $i -out ${i/.fasta/_nogaps.fasta} -gt 0.6;done
+mkdir cocat_tree2
+mv *nogaps.fasta cocat-tree/
+cd cocat_tree2
+vk_concat_alignments.py . > concat.fasta
+
+
 
 
 ##flu
