@@ -186,7 +186,7 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 ## Rota
 for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus B" | awk -F"\t" '{if($15 >= 200){print $0}}' | sort  -k2,2nr -k15,15nr| grep complete|head -1 >> ${i/blastn2/rora-B};done;done
 
-# TRV
+# TRV denovo
 for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
 for i in *_out; do diamond blastx -d ~/softwares/ncbi_database/virus_proteome/viral_refseq.dmnd -q $i/inchworm.DS.fa -f 6 qseqid qlen qcovhsp stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore --sensitive --no-auto-append --top 10 --out ${i/out/blastx};done
 for i in *blastx;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -i "$j" $i | awk -F"\t" '{if($15 >= 20){print $0}}' | sort  -k2,2nr -k15,15nr | head -1 >> ${i}2;done;done
@@ -196,6 +196,21 @@ for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) g
 rm *corr.fasta
 for i in *fasta;do sed -i "s/>/>${i/_S*/\|}/g" $i;done
 for i in *fasta;do sed -i "s/(.*)//g" $i;done
+for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
+for i in *tanoti.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" $i/${i/tanoti/merged} | sed "/^--/d" >> ${i/tanoti/refASM};done;done
+
+
+##TRV reference based
+for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
+for i in *out;do blastn -task blastn -query $i/inch*fa -db reovirus.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
+for i in *blastn;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -i "$j" $i | awk -F"\t" '{if($15 >= 20){print $0}}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
+for i in *blastn2;do cut -f4 $i > ${i/blastn2/ref.ids};done
+for i in *ref.ids;do grep -A1 -wf $i reovirus.fasta | sed "/^--/d" > ${i/ids/fasta};done
+pigz -d *fastq.gz
+for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
+for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
+
+
 
 ########## TREE MAKING REOVIRUS ###########
 for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt2 | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
