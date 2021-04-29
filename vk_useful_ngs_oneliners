@@ -196,8 +196,8 @@ for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) g
 rm *corr.fasta
 for i in *fasta;do sed -i "s/>/>${i/_S*/\|}/g" $i;done
 for i in *fasta;do sed -i "s/(.*)//g" $i;done
-for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
-for i in *tanoti.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" $i/${i/tanoti/merged} | sed "/^--/d" >> ${i/tanoti/refASM};done;done
+
+
 
 
 ##TRV reference based
@@ -209,6 +209,10 @@ for i in *ref.ids;do grep -A1 -wf $i reovirus.fasta | sed "/^--/d" > ${i/ids/fas
 pigz -d *fastq.gz
 for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
 for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
+for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
+for i in *tanoti.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" $i/${i/tanoti/merged} | sed "/^--/d" >> ${i/tanoti/refASM};done;done
+for i in *refASM.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do sed -i "s/${j}.*/$j|$j/g" $i;done;done
+pigz *fastq
 
 
 
