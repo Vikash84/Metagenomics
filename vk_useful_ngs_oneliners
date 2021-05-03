@@ -206,7 +206,7 @@ for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrna
 for i in *out;do blastn -task blastn -query $i/inch*fa -db reovirus.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
 for i in *blastn;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -i "$j" $i | awk -F"\t" '{if($15 >= 20){print $0}}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
 for i in *blastn2;do cut -f4 $i > ${i/blastn2/ref.ids};done
-for i in *ref.ids;do grep -A1 -wf $i reovirus.fasta | sed "/^--/d" | sed "s/ //g"> ${i/ids/fasta};done
+for i in *ref.ids;do for j in `cat $i`;do grep -A1 $j reovirus.fasta | sed "/^--/d" | sed "s/ //g" >> ${i/ids/fasta};done;done
 pigz -d *fastq.gz
 for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
 for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
