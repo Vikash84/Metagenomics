@@ -281,3 +281,6 @@ docker run --rm -v `pwd`/../data_dir:/data -v `pwd`/../input_and_output:/in_out 
 ##RaxML tree
 ./raxml-ng --all --msa toti-orf2-AA.fasta --model LG+G8+F --tree pars{10} --bs-trees 100 --threads 50
 
+##Kraken
+sudo nextflow run angelovangel/nextflow-kraken2 --readsdir . --fqpattern '*_R{1,2}*.fastq.gz' --kraken_db /home/vsingh/db/kraken/minikraken_8GB_202003.tgz
+
