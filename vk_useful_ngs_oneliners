@@ -239,7 +239,7 @@ for i in *fasta;do sed -i "s/(.*)//g" $i;done
 cp ~/softwares/ncbi_database/reovirus/reovirus.fasta* .
 for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
 for i in *out;do blastn -task blastn -query $i/inch*fa -db reovirus.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
-for i in *blastn;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -i "$j" $i | awk -F"\t" '{if($15 >= 20){print $0}}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
+for i in *blastn;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -i "$j" $i | grep -v KR9979 | grep -v MG869811 |awk -F"\t" '{if($15 >= 20){print $0}}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
 for i in *blastn2;do cut -f4 $i > ${i/blastn2/ref.ids};done
 for i in *ref.ids;do for j in `cat $i | cut -d" " -f1`;do grep -A1 ${j} reovirus.fasta | sed "/^--/d" | sed "s/ //g" >> ${i/ids/fasta};done;done
 pigz -d *fastq.gz
