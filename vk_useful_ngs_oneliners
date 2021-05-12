@@ -185,9 +185,40 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 
 ## Rota
 nohup sh -c 'vk_metaMor.sh "*R1_001.fastq.gz" ./rota.complete.fasta ~/softwares/ncbi_database/virus_proteome/viral_refseq.dmnd 21,33,55,77'
-for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus A" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn2/rota-A};done;done
-for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus B" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn2/rota-B};done;done
-for i in *blastn2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus C" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn2/rota-C};done;done
+
+#RVA
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus.A" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-A};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus.A" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-A2};done;done
+for i in *rota-A2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
+for i in *rota-A2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-A2/rota-A-replace.ids};done
+for i in *rota-A;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-A/out}/contigs.fasta;done
+for i in *rota-A.corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/.corr.fasta/-replace.ids} $i > ${i}2;done
+for i in *rota-A.corr.fasta2;do mv $i ${i/_S*/-rota-A.fasta};done
+for i in *rota-A.fasta;do sed -i "s/>/>${i/-rota-A*}|/g" $i;done
+
+#RVB
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus.B" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-B};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus.B" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-B2};done;done
+for i in *rota-B2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
+for i in *rota-B2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-B2/rota-B-replace.ids};done
+for i in *rota-B;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-B/out}/contigs.fasta;done
+for i in *rota-B.corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/.corr.fasta/-replace.ids} $i > ${i}2;done
+for i in *rota-B.corr.fasta2;do mv $i ${i/_S*/-rota-B.fasta};done
+for i in *rota-B.fasta;do sed -i "s/>/>${i/-rota-B*}|/g" $i;done
+
+#RVC
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus.C" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-C};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep -i "virus.C" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-C2};done;done
+for i in *rota-C2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
+for i in *rota-C2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-C2/rota-C-replace.ids};done
+for i in *rota-C;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-C/out}/contigs.fasta;done
+for i in *rota-C.corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/.corr.fasta/-replace.ids} $i > ${i}2;done
+for i in *rota-C.corr.fasta2;do mv $i ${i/_S*/-rota-C.fasta};done
+for i in *rota-C.fasta;do sed -i "s/>/>${i/-rota-C*}|/g" $i;done
+
+
+
+
 
 # TRV denovo
 for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
