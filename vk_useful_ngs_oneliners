@@ -184,6 +184,7 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 
 
 ## Rota
+conda deactivate base
 nohup sh -c 'vk_metaMor.sh "*R1_001.fastq.gz" ./rota.complete.fasta ~/softwares/ncbi_database/virus_proteome/viral_refseq.dmnd 21,33,55,77'
 
 #RVA
