@@ -288,6 +288,30 @@ for i in *blastn2;do vk_correct_orient_fasta_blastn.sh $i ${i/blastn2/out}/scaff
 for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/blastn2*/rep.ids} $i > ${i/ASM*/fasta};done
 rm *corr.fasta
 for i in *fasta;do sed -i "s/>/>${i/_S*/\|}/g" $i;done
+for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
+for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
+for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
+
+
+##Flu reference based
+for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
+for i in *out;do blastn -query $i/inch*fa -db ~/softwares/ncbi_database/flu_database/flu.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
+for i in *blastn;do for j in `seq 1 1 8`; do grep -i "segment $j" $i | sed "s/ /./g" |awk -F"\t" '{if($15 >= 20){print $0}}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
+for i in *blastn2;do cut -f4 $i | cut -d"." -f1 > ${i/blastn2/ref.ids};done
+for i in *ref.ids;do epost -input $i -db nucleotide | efetch -format fasta > ${i/ids/fasta};done
+for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/segment\ ${j}.*/segment\ ${j}/g" $i;done;done
+for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/ .*segment/_segment/g" $i;done;done
+for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/ /-/g" $i ;done;done
+for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
+for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
+for i in *tanoti.fasta;do for j in `seq 1 1 8`;do cat $i/* | grep -A1 -i segment-$j >> ${i/tanoti*/refASM.fasta};done;done
+for i in *refASM.fasta;do for j in `seq 1 1 8`; do sed -i "s/segment-${j}.*/segment-${j}|segment-${j}/g" $i;done;done
+for i in *refASM.fasta;do sed -i "s/_tanoti//g" $i;done
+for i in *refASM.fasta;do cut -d"|" -f1,3 $i > ${i/ASM/ASM2};done
+
+
+
+
 
 ## PCV3
 for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
