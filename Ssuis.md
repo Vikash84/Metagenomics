@@ -41,3 +41,25 @@ for i in *L001_R2_001.fastq;do mv $i ${i/L001_R2_001.fastq/R2_001.fastq};done
 ```bash
 ./Ssuis_serotypingPipeline.pl --fastq_directory `pwd`/data --forward _R1_001 --reverse _R2_001 --ends pe
 ```
+
+# tormes-1.3.0 E.coli and salmonella analysis
+```bash
+conda deactivate base
+PERL5LIB="";
+conda activate tormes-1.3.0
+```
+### sample sheet preparation
+```bash
+echo -e "Samples\tRead1\tRead2" >> samples.tab
+for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples.tab;done
+```
+### E.coli
+```bash
+tormes --metadata samples.tab --output ecoli_TORMES-070821 --custom_genes_db ecoli_virulence --threads 32 --genera Escherichia
+```
+### Salmonella
+```bash
+tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --genera Salmonella
+```
+
+
