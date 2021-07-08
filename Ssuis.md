@@ -67,7 +67,7 @@ tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --gen
 conda activate assembly
 for i in *fasta;do echo -e "`pwd`/$i" >> query_list;done
 for i in *fasta;do echo -e "`pwd`/$i" >> reference_list;done
-fastANI --ql query_list --rl reference_list -o fastani-out
+fastANI --ql query_list --rl reference_list --matrix -o fastani-out
 ```
 
 
