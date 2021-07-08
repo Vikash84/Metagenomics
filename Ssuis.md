@@ -68,6 +68,7 @@ conda activate assembly
 for i in *fasta;do echo -e "`pwd`/$i" >> query_list;done
 for i in *fasta;do echo -e "`pwd`/$i" >> reference_list;done
 fastANI --ql query_list --rl reference_list --matrix -o fastani-out
+sed -i "s/\/.*\///g" fastani-out.matrix
 ```
 
 
