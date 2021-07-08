@@ -62,4 +62,12 @@ tormes --metadata samples.tab --output ecoli_TORMES-070821 --custom_genes_db eco
 tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --genera Salmonella
 ```
 
+# fastANI analysis
+```bash
+conda activate assembly
+for i in *fasta;do echo -e "`pwd`/$i" >> query_list;done
+for i in *fasta;do echo -e "`pwd`/$i" >> reference_list;done
+fastANI --ql query_list --rl reference_list -o fastani-out
+```
+
 
