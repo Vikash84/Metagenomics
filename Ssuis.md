@@ -71,7 +71,8 @@ fastANI --ql query_list --rl reference_list --matrix -o fastani-out
 sed -i "s/\/.*\///g" fastani-out.matrix
 ```
 
-# Download SRA sequence read sample files from NCBI
+# Download SRA sequence read sample files from NCBI 
+#### (https://github.com/louiejtaylor/grabseqs)
 ```bash
 grabseqs sra ERR1777403
 ```
