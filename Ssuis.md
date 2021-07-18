@@ -80,12 +80,16 @@ grabseqs sra ERR1777403
 
 ##convert vcf to simple 3 colums file, nano header SNP, Chr, Pos
 ### input vcf file "input.vcf"
+```bash
 more input.vcf | grep -v "#" | cut -f1,2,3 | awk '{ $3=$2; print $0}' | awk '{ $2=$1; print $0}' | awk '{ $1=$2__$3; print $0}' > input.txt
+```
 
 ## R commands
+```bash
 library(CMplot)
 PBR <-read.table("input.txt", header = TRUE)
 CMplot(PBR,plot.type="d",bin.size=1e6,col=c("darkgreen", "yellow", "red"),file="jpg",memo="",dpi=300)
+```
 
 
 
