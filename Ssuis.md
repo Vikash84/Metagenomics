@@ -92,16 +92,21 @@ CMplot(PBR,plot.type="d",bin.size=1e6,col=c("darkgreen", "yellow", "red"),file="
 ```
 
 # snp density with ggplot2
+```bash
 snps<-read.table("SNPs.vcf",sep="\t",header=F,blank.lines.skip=TRUE,
                  comment.char = "#")
 colnames(snps)<-c("chr","start","id","refallele","altallele","qual",
                   "filter","info","format")
 summary(snps)
+```
 ##### put the chromosomes in the good order: chr1, chr2, chr22, chrX
+```bash
 goodChrOrder <- c(paste("Supercontig_1.",c(1:8),sep=""),"MT_CBS_6936")
 snps$chr <- factor(snps$chr,levels=goodChrOrder)
+```
 
 ##### Plot the densities of snps in the bed file for each chr seperately
+```bash
 library(ggplot2)
 snpDensity<-ggplot(snps) + 
 geom_histogram(aes(x=start),binwidth=1e4) + # pick a binwidth that is not too small 
@@ -110,11 +115,14 @@ ggtitle("Density of SNPs") +
 xlab("Position in the genome") + 
 ylab("SNP density") + 
 theme_bw() # I prefer the black and white theme
+```
 
 ##### save the plot to .pdf file
+```bash
 pdf("snp_density.pdf",800,1000)
 print(snpDensity)
 #dev.off()
+```
 
 
 
