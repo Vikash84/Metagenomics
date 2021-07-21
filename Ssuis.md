@@ -8,6 +8,10 @@ for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >
 
 ### Running pipeline
 ```bash
+conda deactivate base
+PERL5LIB="";
+conda activate nullarbor-new
+
 PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst hparasuis --treebuilder iqtree_slow --taxoner centrifuge --name Hparasuis_analysis --ref ref.fasta --input samples.tab --outdir results
 ```
 
