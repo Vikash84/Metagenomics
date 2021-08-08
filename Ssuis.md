@@ -48,7 +48,7 @@ for i in *L001_R2_001.fastq;do mv $i ${i/L001_R2_001.fastq/R2_001.fastq};done
 
 # tormes-1.3.0 E.coli and salmonella analysis
 ```bash
-conda deactivate base
+conda deactivate
 PERL5LIB="";
 conda activate tormes-1.3.0
 ```
