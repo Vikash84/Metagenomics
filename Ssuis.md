@@ -36,6 +36,15 @@ PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtre
 ```
 ### Ssuis serotyping
 ```bash
+conda deactivate
+PERL5LIB="";
+conda activate ssuissero-env
+for i in *.fasta;do SsuisSero.sh -s ${i/.fasta} -i $i -o . -x fasta;done
+cat *tsv | grep -v Sample | less
+```
+or
+
+```bash
 git clone https://github.com/streplab/SsuisSerotyping_pipeline.git
 conda activate srst2-env
 for i in *L001_R1_001.fastq;do mv $i ${i/L001_R1_001.fastq/R1_001.fastq};done
