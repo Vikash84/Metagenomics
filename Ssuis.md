@@ -8,7 +8,7 @@ for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >
 
 ### Running pipeline
 ```bash
-conda deactivate base
+conda deactivate
 PERL5LIB="";
 conda activate nullarbor-new
 
