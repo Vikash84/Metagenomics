@@ -3,6 +3,8 @@
 ### sample sheet preparation
 ```bash
 for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples.tab;done
+
+for i in *fasta;do echo -e "${i/.fasta*}\tGENOME\t`pwd`/$i" >> samples.tab;done
 ```
 ### Downloading refence sequenece from NCBI
 
