@@ -22,6 +22,12 @@ PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst hparasuis --treebuilder i
 blastn -task blastn-short -query Hparasuis_sero_primers.fasta -db HPS.all_merged.fasta -out HPS.all_merged.blastn -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -max_target_seqs 5 -num_threads 50
 
 sort -k3,3nr -k15,15nr HPS.all_merged.blastn | awk -F"\t" '!seen[$1]++' | less
+
+alternate method
+conda deactivate
+PERL5LIB="";
+conda activate hpsuissero-env
+for i in *fasta;do HpsuisSero.sh -i $i -o . -s ${i/.fasta};done
 ```
 ### vtaA profile
 ```bash
