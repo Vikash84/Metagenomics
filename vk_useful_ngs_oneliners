@@ -292,10 +292,19 @@ for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i 
 for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
 for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
 
-
+##flu trinity denovo assembly
+for i in *R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --output ${i/R1*/trinity_out};done
 for i in *trinity_out;do blastn -task blastn -query $i/Trinity.fasta -db /home/vsingh/softwares/ncbi_database/flu_database/flu.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
 for i in *blastn;do for j in `seq 1 1 8`;do grep -i "segment $j" $i | awk -F"\t" '$3 >= 50 {print $0}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
-
+for i in *blastn2;do cut -f1,4 $i | sed "s/\t.*segment/\tsegment/g" | sed "s/,/ /g" | sed "s/\./ /g" | sed "s/segment /segment-/g" | cut -d" " -f1 | awk -F"\t" '{print $1"\t"$1"|"$2}' > ${i/blastn2/rep.ids};done
+for i in *blastn2;do vk_correct_orient_fasta_blastn.sh $i ${i/blastn2/out}/Trinity.fasta;done
+for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/blastn2*/rep.ids} $i > ${i/_trinity*/.fasta};done
+pigz -d *fastq.gz
+for i in *VRIS_S*.fasta;do tanoti -P 50 -p 1 -r $i -i ${i/VRIS*/VRIS*R1*fastq} ${i/VRIS*/VRIS*R1*fastq} -o ${i/VRIS*/VRIS.sam};done
+for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/.sam/.fasta};done
+for i in *VRIS.fasta;do for j in `seq 1 1 8`; do grep -i "segment-$j" $i/*merged.fasta >> ${i/VRIS/refASM};done;done
+for i in *VRIS.fasta;do for j in `seq 1 1 8`; do grep -A1 -i "segment-$j" $i/*merged.fasta >> ${i/VRIS/refASM};done;done
+pigz *fastq
 
 ##Flu reference based
 for i in *R1_001.fastq.gz;do /home/vsingh/softwares/lazypipe/lazypipe/trinityrnaseq-v2.10.0/Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --no_run_chrysalis --output ${i/R1*/trinity_out};done
