@@ -184,8 +184,10 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 
 
 ## Rota
-conda deactivate base
-nohup sh -c 'vk_metaMor.sh "*R1_001.fastq.gz" ./rota.complete.fasta ~/softwares/ncbi_database/virus_proteome/viral_refseq.dmnd 21,33,55,77'
+conda deactivate
+PERL5LIB="";
+conda activate trinity-env
+for i in D21-023217-2_FECE_S2_R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --output ${i/R1*/trinity_out};done
 
 #RVA
 for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k2,2nr -k15,15nr| grep -vi partial|head -1 >> ${i/blastn/rota-A};done;done
