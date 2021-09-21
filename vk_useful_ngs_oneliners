@@ -306,6 +306,9 @@ for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/s
 for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
 
 ##flu trinity denovo assembly
+conda deactivate
+PERL5LIB="";
+conda activate trinity-env
 for i in *R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --output ${i/R1*/trinity_out};done
 for i in *trinity_out;do blastn -task blastn -query $i/Trinity.fasta -db /home/vsingh/softwares/ncbi_database/flu_database/flu.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
 for i in *blastn;do for j in `seq 1 1 8`;do grep -i "segment $j" $i | awk -F"\t" '$3 >= 50 {print $0}' | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
