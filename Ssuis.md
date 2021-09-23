@@ -71,12 +71,12 @@ conda activate tormes-1.3.0
 ```
 ### sample sheet preparation
 ```bash
-echo -e "Samples\tRead1\tRead2" >> samples.tab
+echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
 for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples.tab;done
 ```
 ### E.coli
 ```bash
-tormes --metadata samples.tab --output ecoli_TORMES-070821 --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia
 ```
 ### Salmonella
 ```bash
