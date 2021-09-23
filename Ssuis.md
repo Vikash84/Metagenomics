@@ -72,7 +72,7 @@ conda activate tormes-1.3.0
 ### sample sheet preparation
 ```bash
 echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
-for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples.tab;done
+for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
 ```
 ### E.coli
 ```bash
