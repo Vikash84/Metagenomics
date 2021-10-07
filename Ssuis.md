@@ -40,7 +40,9 @@ sort -k3,3nr -k15,15nr vtaA_profile.blastn | awk -F"\t" '!seen[$1]++' | less
 
 # SSuis Analysis
 ```bash
-PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst ssuis --treebuilder iqtree_slow --taxoner centrifuge --name ssuis_analysis --ref Ssuis_ref.fa --input samples.tab --outdir results
+for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
+
+nullarbor.pl --cpus 50 --run --mlst ssuis --treebuilder iqtree_slow --taxoner centrifuge --name Ssuis_analysis-"$( date +"%Y-%m-%d" )" --ref Ssuis_ref.fa --input samples_"$( date +"%Y-%m-%d" )".tab --outdir Ssuis_analysis-"$( date +"%Y-%m-%d" )"
 ```
 ### Ssuis serotyping
 ```bash
