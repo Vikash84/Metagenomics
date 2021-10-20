@@ -187,7 +187,10 @@ sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --
 conda deactivate
 PERL5LIB="";
 conda activate trinity-env
-for i in D21-023217-2_FECE_S2_R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --output ${i/R1*/trinity_out};done
+
+for i in *R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --output ${i/R1*/trinity_out};done
+
+for i in *out;do blastn -query $i/Trinity.fasta -db rota.complete.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 100 -num_threads 50;done
 
 #RVA
 for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-A};done;done
@@ -268,27 +271,18 @@ pigz *fastq
 
 ########## TREE MAKING REOVIRUS ###########
 for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt2 | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
-mkdir concat_tree
-cd concat_tree
-cat ../lambda-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L1.fasta > L1.fasta
-cat ../lambda-B.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L2.fasta > L2.fasta
-cat ../lambda-C.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/L3.fasta > L3.fasta
-cat ../mu-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/M1.fasta > M1.fasta
-cat ../mu-B.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/M2.fasta > M2.fasta
-cat ../mu-NS.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/M3.fasta > M3.fasta
-cat ../sigma-C.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S1.fasta > S1.fasta
-cat ../sigma-A.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S2.fasta > S2.fasta
-cat ../sigma-B.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S3.fasta > S3.fasta
-cat ../sigma-NS.fasta ~/softwares/ncbi_database/reovirus/concatenated_tree_seq/S4.fasta > S4.fasta
-  
+
 conda activate assembly
+
+mkdir cocat_tree
+mv *nogaps.fasta cocat-tree/
+cd cocat_tree
+vk_concat_alignments.py . > concat.fasta
+
 for i in *fasta;do mafft --globalpair --thread 50 --maxiterate 1000 $i > ${i/.fasta/_aligned.fasta};done
 for i in *aligned.fasta;do trimal -in $i -out ${i/.fasta/_nogaps.fasta} -gt 0.6;done
-for i in *nogaps.fasta;do ~/softwares/raxml-ng/build/raxml-ng --all --msa $i --model GTR+G --tree pars{10} --bs-trees 100 --threads 50;done
-mkdir cocat_tree2
-mv *nogaps.fasta cocat-tree/
-cd cocat_tree2
-vk_concat_alignments.py . > concat.fasta
+for i in concat.fasta;do ~/softwares/raxml-ng/build/raxml-ng --all --msa $i --model GTR+G --tree pars{10} --bs-trees 100 --threads 50;done
+
 
 
 
