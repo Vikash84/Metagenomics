@@ -94,6 +94,40 @@ fastANI --ql query_list --rl reference_list --matrix -o fastani-out
 sed -i "s/\/.*\///g" fastani-out.matrix
 ```
 
+# Mycoplasma project
+### kaken analysis
+```bash
+for i in A6_S5_L001_R1_001.fastq.gz; do kraken2 --db /home/vsingh/softwares/minikrake2_db/minikraken_8GB_20200312/ $i --threads 30 --output `basename ${i%_R1_001.fastq.gz}_kraken`;done
+```
+### Extracting reads according to taxanomy (544448)
+```bash
+git clone https://github.com/jenniferlu717/KrakenTools
+```
+```bash
+for i in *fastq.gz;do python extract_kraken_reads.py -k ${i/L001*/L001_kraken} -s $i -t 544448 --include-children --report ${i/L001*/L001_R1_001_kraken2.report} -o ${i/R1/T544448_R1};done
+```
+### Assembly with spades
+```bash
+for i in *gz;do spades.py --only-assembler -t 50 -m 500 -k 21,33,55,77,99,121 -s $i -o ${i/_R1*/.ASM.out};done
+```
+### Tormes anslysis
+```bash
+conda deactivate
+PERL5LIB="";
+conda activate tormes-1.3.0
+```
+#### sample sheet preparation
+```bash
+echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
+for i in *fasta;do echo -e "${i/.fasta*}\tGENOME\t`pwd`/$i" >> samples.tab;done
+```
+
+```bash
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output myco_TORMES-"$( date +"%Y-%m-%d" )" --threads 32
+```
+
+
+
 # Download SRA sequence read sample files from NCBI 
 #### https://github.com/louiejtaylor/grabseqs
 ```bash
