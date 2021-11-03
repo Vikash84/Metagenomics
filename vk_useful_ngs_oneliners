@@ -49,8 +49,7 @@ for i in *R1_paired_trimmed.fastq.gz;do Trinity --seqType fq --left $i,${i/paire
 for i in *trinity_out;do blastn -query $i/inchworm.K25.L25.DS.fa -db ~/softwares/ncbi_database/reovirus/reovirus.fasta -out `basename ${i/out/blastn2}` -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 5 -num_threads 50;done
 
 # blastx command with Diamond
-
-for i in $WorkDir/*ASM_out; do diamond blastx -d $3 -q $i/scaffolds.fasta -f 6 qseqid qlen qcovhsp stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore staxids --sensitive --no-auto-append --top 10 --out ${i/out/blastx};done
+for i in *_out; do diamond blastx -d ~/softwares/ncbi_database/virus_proteome/viral_refseq.dmnd -q $i/Trinity.fasta -f 6 qseqid qlen qcovhsp stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore --sensitive --no-auto-append --top 10 --out ${i/out/blastx};done
 
 # Convert a multi-line fasta to a singleline fasta
 
