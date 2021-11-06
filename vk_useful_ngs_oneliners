@@ -373,3 +373,16 @@ docker run --rm -v `pwd`/../data_dir:/data -v `pwd`/../input_and_output:/in_out 
 ##Kraken
 sudo nextflow run angelovangel/nextflow-kraken2 --readsdir . --fqpattern '*_R{1,2}*.fastq.gz' --kraken_db /home/vsingh/db/kraken/minikraken_8GB_202003.tgz
 
+
+##V-pipe
+
+conda deactivate
+PERL5LIB="";
+conda activate V-pipe
+mkdir my_project_work_dir
+cd my_project_work_dir
+/home/vsingh/softwares/v-pipe/V-pipe/init_project.sh
+
+
+
+
