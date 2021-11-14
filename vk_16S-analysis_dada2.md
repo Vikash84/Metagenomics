@@ -6,7 +6,7 @@
 #### reference: https://docs.qiime2.org/2019.10/tutorials/
 
 # 1 data preparation
-# 1.0.1 copy/upload all the fastq.gz files to fqgz dir
+# 1.0.1 copy/transfer all the fastq.gz files to fastq_files dir
 ```bash
 mkdir fastq_files
 ```
