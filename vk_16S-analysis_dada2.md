@@ -20,6 +20,14 @@ Con8124Ileum    $PWD/fqgz/1183-19_S19_L001_R1_001.fastq.gz  $PWD/fqgz/1183-19_S1
 ...
 ```
 # 1.0.3 make metadata file
-  . for whole job
+#### for whole job
 #### job_meta.tsv tab-separated values (TSV) file
 #### ref: https://docs.qiime2.org/2019.10/tutorials/metadata/
+```bash
+sample-id   GroupID treatment-group E.coliChallenge Sex Euth    PigID   Sourceofsample  Datetaken   NGS-SampleNo
+#q2:types   categorical categorical categorical categorical categorical categorical categorical categorical categorical
+Con5090Ileum    C   Control NO  M   1   5090    Ileum   1/7/2019    1
+Con8124Ileum    C   Control NO  F   2   8124    Ileum   5/7/2019    19
+Con8141Ileum    C   Control NO  M   2   8141    Ileum   5/7/2019    20
+...
+```
