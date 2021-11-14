@@ -77,5 +77,5 @@ qiime cutadapt trim-paired \
 ```
 --p-cores is number of cores. the above code produces the pe_reads_cutadapt_trimmed.qza file.
 ## 2.3 Summarize trimmed FASTQs
-Check quality plots and sequence length
-`code in qiime2:
+###### Check quality plots and sequence length
+###### code in qiime2:
