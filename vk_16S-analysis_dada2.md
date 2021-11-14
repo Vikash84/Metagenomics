@@ -42,7 +42,7 @@ CR-EC   CR-EC
 EC  EC
 ```
 ## 1.0.4 prepare/download database for taxonomy assignment
-We use SILVA database silva_132_99_V4/silva-132-99-515-806-nb-classifier.qza
+We use SILVA database **silva_132_99_V4/silva-132-99-515-806-nb-classifier.qza
 
 # 2 QIIME2 anlysis steps
 ## 2.1 data importing
@@ -55,7 +55,7 @@ qiime tools import \
   --output-path paired-end-demux.qza \
   --input-format PairedEndFastqManifestPhred33V2
 ```
-the above code produces the paired-end-demux.qza file
+the above code produces the **paired-end-demux.qza file
 
 ## 2.2 primer trimming with cutadapt
 ###### ref https://github.com/SchlossLab/MiSeq_WetLab_SOP
@@ -75,7 +75,7 @@ qiime cutadapt trim-paired \
    --verbose \
    &> primer_trim.log 
 ```
---p-cores is number of cores. the above code produces the pe_reads_cutadapt_trimmed.qza file.
+--p-cores is number of cores. the above code produces the **pe_reads_cutadapt_trimmed.qza file.
 ## 2.3 Summarize trimmed FASTQs
 ###### Check quality plots and sequence length
 ###### code in qiime2:
