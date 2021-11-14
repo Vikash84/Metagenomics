@@ -61,8 +61,8 @@ the above code produces the paired-end-demux.qza file
 ###### ref https://github.com/SchlossLab/MiSeq_WetLab_SOP
 
 ###### DNA was amplified by using the 515f/806r primer set:
-Forward V4: GTGCCAGCMGCCGCGGTAA.
-Reverse V4: GGACTACHVGGGTWTCTAAT.
+###### Forward V4: GTGCCAGCMGCCGCGGTAA
+###### Reverse V4: GGACTACHVGGGTWTCTAAT
 
 code in qiime2:
 ```bash
