@@ -57,3 +57,22 @@ qiime tools import \
 ```
 the above code produces the paired-end-demux.qza file
 
+## 2.2 primer trimming with cutadapt
+###### ref https://github.com/SchlossLab/MiSeq_WetLab_SOP
+
+###### DNA was amplified by using the 515f/806r primer set:
+Forward V4: GTGCCAGCMGCCGCGGTAA.
+Reverse V4: GGACTACHVGGGTWTCTAAT.
+
+code in qiime2:
+```bash
+qiime cutadapt trim-paired \
+   --i-demultiplexed-sequences paired-end-demux.qza \
+   --p-cores 20 \
+   --p-front-f GTGCCAGCMGCCGCGGTAA \
+   --p-front-r GGACTACHVGGGTWTCTAAT \
+   --o-trimmed-sequences pe_reads_cutadapt_trimmed.qza \
+   --verbose \
+   &> primer_trim.log 
+```
+--p-cores is number of cores. the above code produces the pe_reads_cutadapt_trimmed.qza file.
