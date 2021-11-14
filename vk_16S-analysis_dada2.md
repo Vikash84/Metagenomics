@@ -1,4 +1,3 @@
-
 # 16S tutorial
 ###### Vikash Singh
 ###### November 14, 2021
@@ -34,3 +33,12 @@ Con8141Ileum    C   Control NO  M   2   8141    Ileum   5/7/2019    20
 
 ###### for categorical variables
 ###### e.g.GroupID tab-separated values (TSV) file
+```bash
+sample-id   GroupID
+#q2:types   categorical
+C   C
+CR  CR
+CR-EC   CR-EC
+EC  EC
+```
+
