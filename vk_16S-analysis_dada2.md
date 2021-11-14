@@ -79,3 +79,15 @@ qiime cutadapt trim-paired \
 ## 2.3 Summarize trimmed FASTQs
 ###### Check quality plots and sequence length
 ###### code in qiime2:
+```bash
+qiime demux summarize \
+    --i-data pe_reads_cutadapt_trimmed.qza \
+    --o-visualization pe_reads_cutadapt_trimmed.qzv
+```
+##### To view and check the pe_reads_cutadapt_trimmed.qzv, you can
+<!--- qiime tools view pe_reads_cutadapt_trimmed.qzv , or
+upload this file to view.qiime2.org, or
+unzip the qzv and open the data/index.html.--->
+
+Based on the plots you see in qzv, decide values would you choose for --p-trunc-len and --p-trim-left in DADA2 denoising ref: https://docs.qiime2.org/2019.10/tutorials/atacama-soils/
+
