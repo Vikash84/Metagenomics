@@ -11,9 +11,8 @@
 mkdir fastq_files
 ```
 # 1.0.2 make manifest file
-######## job_manifest.tsv tab-separated values (TSV) file
-
-######## ref: https://github.com/qiime2/docs/blob/master/source/tutorials/importing.rst#fastq-manifest-formats
+##### job_manifest.tsv tab-separated values (TSV) file
+#### ref: https://github.com/qiime2/docs/blob/master/source/tutorials/importing.rst#fastq-manifest-formats
 ```bash
 sample-id   forward-absolute-filepath   reverse-absolute-filepath
 Con5090Ileum    $PWD/fqgz/1183-1_S1_L001_R1_001.fastq.gz    $PWD/fqgz/1183-1_S1_L001_R2_001.fastq.gz
