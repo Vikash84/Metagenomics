@@ -20,6 +20,6 @@ Con8124Ileum    $PWD/fqgz/1183-19_S19_L001_R1_001.fastq.gz  $PWD/fqgz/1183-19_S1
 ...
 ```
 # 1.0.3 make metadata file
-    #### .for whole job
+  . for whole job
 #### job_meta.tsv tab-separated values (TSV) file
 #### ref: https://docs.qiime2.org/2019.10/tutorials/metadata/
