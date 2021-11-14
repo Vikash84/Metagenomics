@@ -41,4 +41,6 @@ CR  CR
 CR-EC   CR-EC
 EC  EC
 ```
+## 1.0.4 prepare/download database for taxonomy assignment
+We use SILVA database silva_132_99_V4/silva-132-99-515-806-nb-classifier.qza
 
