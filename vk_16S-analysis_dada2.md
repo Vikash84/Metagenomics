@@ -55,7 +55,7 @@ qiime tools import \
   --output-path paired-end-demux.qza \
   --input-format PairedEndFastqManifestPhred33V2
 ```
-the above code produces the **paired-end-demux.qza file
+the above code produces the **paired-end-demux.qza** file
 
 ## 2.2 primer trimming with cutadapt
 ###### ref https://github.com/SchlossLab/MiSeq_WetLab_SOP
