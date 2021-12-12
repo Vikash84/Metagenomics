@@ -384,4 +384,12 @@ cd my_project_work_dir
 
 
 
+### PRRSv annotation + RFLP analysis #####
+/home/vsingh/softwares/SPAR/SPAR/run2.py annotate --output D21_032360_2_SERUM_S11.gff3  D21_032360_2_SERUM_S11.fasta
+
+/home/vsingh/softwares/SPAR/SPAR/run2.py rflp D21_032360_2_SERUM_S11.fasta > D21_032360_2_SERUM_S11.rflp.fasta
+
+
+
+
 
