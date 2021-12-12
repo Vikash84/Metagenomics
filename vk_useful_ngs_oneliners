@@ -392,6 +392,8 @@ cd my_project_work_dir
 conda activate agat
 PERL5LIB="";
 agat_sp_extract_sequences.pl --gff D21_032360_2_SERUM_S11.gff --fasta D21_032360_2_SERUM_S11.fasta -t cds -o D21_032360_2_SERUM_S11.cds.fasta
+sed "s/ .*//g" D21_032360_2_SERUM_S11.cds.fasta | sed "s/gene/CDS/g" > D21_032360_2_SERUM_S11.cds2.fasta
+vk_multiFastaSingleFasta.sh D21_032360_2_SERUM_S11.cds2.fasta
 
 
 
