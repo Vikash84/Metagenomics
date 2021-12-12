@@ -385,15 +385,16 @@ cd my_project_work_dir
 
 
 ### PRRSv annotation + RFLP analysis #####
-/home/vsingh/softwares/SPAR/SPAR/run2.py annotate --output D21_032360_2_SERUM_S11.gff3  D21_032360_2_SERUM_S11.fasta
+for i in *fasta;do /home/vsingh/softwares/SPAR/SPAR/run2.py annotate --output ${i/fasta}gff3 $i;done
 
-/home/vsingh/softwares/SPAR/SPAR/run2.py rflp D21_032360_2_SERUM_S11.fasta > D21_032360_2_SERUM_S11.rflp.fasta
+for i in *fasta;do /home/vsingh/softwares/SPAR/SPAR/run2.py rflp $i > ${i/fasta}rflp.fna;done
 
 conda activate agat
 PERL5LIB="";
-agat_sp_extract_sequences.pl --gff D21_032360_2_SERUM_S11.gff --fasta D21_032360_2_SERUM_S11.fasta -t cds -o D21_032360_2_SERUM_S11.cds.fasta
-sed "s/ .*//g" D21_032360_2_SERUM_S11.cds.fasta | sed "s/gene/CDS/g" > D21_032360_2_SERUM_S11.cds2.fasta
-vk_multiFastaSingleFasta.sh D21_032360_2_SERUM_S11.cds2.fasta
+for i in *gff3;do agat_sp_extract_sequences.pl --gff $i --fasta ${i/gff3}fasta -t cds -o ${i/gff3}cds.fasta;done
+for i in *cds.fasta;do sed "s/ .*//g" $i | sed "s/gene/CDS/g" | sed "s/\:/_/g" | sed "s/|/_/g" | sed "s/\//_/g" > ${i/cds/cds2};done
+for i in *cds2.fasta;do vk_multiFastaSingleFasta.sh $i;done
+
 
 
 
