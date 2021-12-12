@@ -1,3 +1,7 @@
+tmp=${a#*_}   # remove prefix ending in "_"
+b=${tmp%_*}   # remove suffix starting with "_"
+
+
 # Taken from http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/
 
 # bcl2fastq conversion of nextseq (https://anaconda.org/bioconda/bcl2fastq-nextseq (https://github.com/brwnj/bcl2fastq))
