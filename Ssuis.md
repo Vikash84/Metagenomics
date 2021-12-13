@@ -14,6 +14,9 @@ conda deactivate
 PERL5LIB="";
 conda activate nullarbor-new
 
+rm ~/miniconda3/envs/nullarbor-new/db/vfdb/sequences*
+cp ~/miniconda3/envs/nullarbor-new/db/vfdb/vfdb_all/sequences* ~/miniconda3/envs/nullarbor-new/db/vfdb
+
 PERL5LIB="";nullarbor.pl --cpus 50 --run --trim --mlst hparasuis --treebuilder iqtree_slow --taxoner centrifuge --name Hparasuis_analysis --ref ref.fasta --input samples.tab --outdir results
 ```
 
