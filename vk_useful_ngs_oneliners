@@ -400,6 +400,11 @@ for i in *cds.fasta;do sed "s/ .*//g" $i | sed "s/gene/CDS/g" | sed "s/\:/_/g" |
 for i in *cds2.fasta;do vk_multiFastaSingleFasta.sh $i;done
 
 
+## nonopore
+
+viroconstrictor --input reads --output virocons --primers NONE --platform nanopore --reference ref.fa --threads 50 --features NONE --amplicon-type end-to-end
+
+
 
 
 
