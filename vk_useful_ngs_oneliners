@@ -173,6 +173,7 @@ nextflow run angelovangel/nextflow-kraken2 --fqpattern *_R{1,2}_001.fastq.gz --k
 nextflow run peterk87/nf-virontus -profile singularity --reads "fastq_pass/all.fastq" --ref_fasta ref.fasta --low_coverage 1
 
 ## 16S pipeline
+Kraken-based
 sudo nextflow run angelovangel/nextflow-kraken2 --readsdir . --fqpattern "*R{1,2}*.fastq.gz" --taxlevel G --kraken_db s3://genome-idx/kraken/16S_Silva138_20200326.tgz
 
 git clone https://github.com/h3abionet/16S-rDNA-dada2-pipeline
@@ -182,7 +183,8 @@ cd 16S-rDNA-dada2-pipeline
 nextflow run main.nf -profile standard --reads="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/fastq/*_R{1,2}_001.fastq.gz" trimFor 24 --trimRev 25 --reference="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/silva_nr_v132_train_set.fa.gz" species="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/silva_species_assignment_v132.fa.gz" --outdir="/home/vsingh/vdl/Mor_Project_163/D20-021867/16S-rDNA-dada2-pipeline/out"
 
 
-sudo nextflow run angelovangel/nextflow-kraken2 --readsdir "fastq_pass/fastq" --kraken_db ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/16S_Greengenes13.5_20200326.tgz --outdir tets --taxlevel S --readlen 250 --ontreads true --fqpattern "*.fastq"
+Ampliseq nf-core
+sudo nextflow run nf-core/ampliseq -r 2.1.1 -profile docker --input "data" --FW_primer "GTGYCAGCMGCCGCGGTAA" --RV_primer "GGACTACNVGGGTWTCTAAT" --dada_tax_agglom_max 8 --qiime_tax_agglom_max 7 --qiime_ref_taxonomy silva
 
 
 
