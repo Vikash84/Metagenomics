@@ -396,6 +396,8 @@ for i in *fasta;do /home/vsingh/softwares/SPAR/SPAR/run2.py annotate --output ${
 
 for i in *fasta;do /home/vsingh/softwares/SPAR/SPAR/run2.py rflp $i > ${i/fasta}rflp.fna;done
 
+for i in ORF1a ORF1ab ORF2 ORF2b ORF3 ORF4 ORF5a ORF5 ORF6 ORF7;do grep -A1 -E "$i$" D21-037947-SERM_pool11-13.cds3.fasta | sed "/^--$/d" > ${i}.fasta;done
+
 conda activate agat
 PERL5LIB="";
 for i in *gff3;do agat_sp_extract_sequences.pl --gff $i --fasta ${i/gff3}fasta -t cds -o ${i/gff3}cds.fasta;done
