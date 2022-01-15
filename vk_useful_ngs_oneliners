@@ -1,3 +1,5 @@
+https://github.com/marbl/canu/issues/1674
+
 tmp=${a#*_}   # remove prefix ending in "_"
 b=${tmp%_*}   # remove suffix starting with "_"
 
