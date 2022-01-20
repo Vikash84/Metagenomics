@@ -1,3 +1,10 @@
+###########################
+recombination analysis
+
+python3 -m openrdp prrsv_aligned.fasta ./prrsv_aligned.csv -cfg ~/softwares/OpenRDP/openrdp/tests/test_cfg.ini -all
+###########################
+
+
 https://github.com/marbl/canu/issues/1674
 
 tmp=${a#*_}   # remove prefix ending in "_"
