@@ -419,6 +419,10 @@ for i in *cds.fasta;do sed "s/ .*//g" $i | sed "s/gene/CDS/g" | sed "s/\:/_/g" |
 for i in *cds2.fasta;do vk_multiFastaSingleFasta.sh $i;done
 
 
+
+for i in ORF1a ORF1ab ORF2 ORF3 ORF4 ORF5 ORF6 ORF7;do java -jar ~/softwares/FigTree_v1.4.4/lib/figtree.jar -graphic PDF -width 600 -height 800 ${i}_aligned_nogaps.fasta.raxml.support ${i}_tree.pdf;done
+
+
 ## nonopore
 
 viroconstrictor --input reads --output virocons --primers NONE --platform nanopore --reference ref.fa --threads 50 --features NONE --amplicon-type end-to-end
