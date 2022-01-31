@@ -217,8 +217,8 @@ for i in *R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} -
 for i in *out;do blastn -query $i/Trinity.fasta -db rota.complete.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 100 -num_threads 50;done
 
 #RVA
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-A};done;done
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-A2};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-A};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-A2};done;done
 for i in *rota-A2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
 for i in *rota-A2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-A2/rota-A-replace.ids};done
 for i in *rota-A;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-A/out}/Trinity.fasta;done
@@ -227,8 +227,8 @@ for i in *rota-A.corr.fasta2;do mv $i ${i/_S*/-rota-A.fasta};done
 for i in *rota-A.fasta;do sed -i "s/>/>${i/-rota-A*}|/g" $i;done
 
 #RVB
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.B" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-B};done;done
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.B" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-B2};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.B" | sort -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-B};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.B" | sort -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-B2};done;done
 for i in *rota-B2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
 for i in *rota-B2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-B2/rota-B-replace.ids};done
 for i in *rota-B;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-B/out}/Trinity.fasta;done
@@ -237,8 +237,8 @@ for i in *rota-B.corr.fasta2;do mv $i ${i/_S*/-rota-B.fasta};done
 for i in *rota-B.fasta;do sed -i "s/>/>${i/-rota-B*}|/g" $i;done
 
 #RVC
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.C" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-C};done;done
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.C" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-C2};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.C" | sort -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-C};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.C" | sort -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-C2};done;done
 for i in *rota-C2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
 for i in *rota-C2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-C2/rota-C-replace.ids};done
 for i in *rota-C;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-C/out}/Trinity.fasta;done
@@ -248,8 +248,8 @@ for i in *rota-C.fasta;do sed -i "s/>/>${i/-rota-C*}|/g" $i;done
 
 
 #RVH
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.H" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-H};done;done
-for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.H" | sort  -k2,2nr -k15,15nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-H2};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.H" | sort -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-H};done;done
+for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.H" | sort -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-H2};done;done
 for i in *rota-H2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do sed -i "s/$j.*/$j\t$j/g" $i;done;done
 for i in *rota-H2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-H2/rota-H-replace.ids};done
 for i in *rota-H;do vk_correct_orient_fasta_blastn.sh $i ${i/rota-H/out}/Trinity.fasta;done
