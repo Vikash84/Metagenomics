@@ -1,10 +1,16 @@
 https://github.com/vpeddu/bmebootcamp-metagenomics/blob/master/main.nf
-
+#############################
 https://github.com/biocorecrg
 ############################
 concat tables
 
 https://github.com/stevekm/nextflow-boilerplate/blob/master/bin/concat-tables.py
+
+DESCRIPTION: This script will concatenate multiple flat text
+based tables which have a common 1-line header
+bash equivalent:
+$ head -1 $(echo $FILES | cut -d ' ' -f1) > test_output.tsv
+$ for i in $FILES; do tail -n +2 "$i" >> test_output.tsv; done
 ###########################
 recombination analysis
 
