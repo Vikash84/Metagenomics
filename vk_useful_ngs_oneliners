@@ -211,7 +211,7 @@ nextflow run main.nf -profile standard --reads="/home/vsingh/vdl/Mor_Project_163
 
 
 Ampliseq nf-core
-sudo nextflow run nf-core/ampliseq -r 2.1.1 -profile docker --input "data" --FW_primer "GTGYCAGCMGCCGCGGTAA" --RV_primer "GGACTACNVGGGTWTCTAAT" --dada_tax_agglom_max 8 --qiime_tax_agglom_max 7 --qiime_ref_taxonomy silva
+sudo nextflow run nf-core/ampliseq -r 2.1.1 -profile docker --input "data" --FW_primer "GTGYCAGCMGCCGCGGTAA" --RV_primer "GGACTACNVGGGTWTCTAAT" --dada_tax_agglom_max 8 --qiime_tax_agglom_max 7
 
 
 
