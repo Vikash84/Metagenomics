@@ -29,8 +29,8 @@ sort -k3,3nr -k15,15nr HPS.all_merged.blastn | awk -F"\t" '!seen[$1]++' | less
 alternate method
 conda deactivate
 PERL5LIB="";
-conda activate hpsuissero-env
-for i in *fasta;do HpsuisSero.sh -i $i -o . -s ${i/.fasta};done
+GparasuisSero-env
+for i in *fasta;do HpsuisSero.sh -i $i -x fasta -o . -s ${i/.fasta};done
 ```
 ### vtaA profile
 ```bash
