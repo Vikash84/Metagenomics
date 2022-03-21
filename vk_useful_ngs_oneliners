@@ -62,7 +62,8 @@ b=${tmp%_*}   # remove suffix starting with "_"
 ## Metaphlan3 (https://huttenhower.sph.harvard.edu/metaphlan)
 conda activate metaphlan3-env
 metaphlan D21-039980-1-BTIS_S1_R1_001.fastq.gz,D21-039980-1-BTIS_S1_R2_001.fastq.gz --bowtie2out metagenome.bowtie2.bz2 --nproc 50 --input_type fastq -o profiled_metagenome.txt
-
+merge_metaphlan_tables.py *.txt > merged_abundance_table.txt
+grep -E "s__|clade" merged_abundance_table.txt | sed 's/^.*s__//g'| cut -f1,3- | sed -e 's/clade_name/Species/g' > merged_abundance_table_species.txt
 
 # Taken from http://bioinformatics.cvr.ac.uk/blog/short-command-lines-for-manipulation-fastq-and-fasta-sequence-files/
 
