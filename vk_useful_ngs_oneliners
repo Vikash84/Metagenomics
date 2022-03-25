@@ -1,3 +1,16 @@
+#########################################
+https://github.com/jhayer/nf-metavir/blob/master/modules/diamond.nf
+script:
+        """
+        #Use of format 102 for producing a taxonomy table output file (it uses LCA)
+        #This output will later be made compatible for kraken-report for import into Pavian
+        diamond blastx -d ${db_diamond} -q ${contigs} -o ${id}_dx_tax.tab -f 102 -p 8
+        # adding the first column U/C to the tab file for kraken-report
+        awk -F'\\t' '{if(\$2>0)\$1="C" FS \$1;else \$1="U" FS \$1;}1' OFS='\\t' ${id}_dx_tax.tab > ${id}_dx_tax_UC.tab
+        #the diamond output can now be converted into kraken report for pavian
+        ./${kraken_report} --db ${kraken1_nt_db} ${id}_dx_tax_UC.tab > ${id}_dx_krak-report.txt
+        rm ${id}_dx_tax_UC.tab
+###########################################
 https://github.com/NCGAS/Microbial-visualization/blob/master/visualization_of_metagenomes.ipynb
 ###########################################
 docker from conda yaml file
