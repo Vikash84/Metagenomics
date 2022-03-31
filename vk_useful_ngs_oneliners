@@ -1,4 +1,7 @@
 #########################################
+Very good nextflow tutorial
+https://sateeshperi.github.io/nextflow_varcal/nextflow/
+#########################################
 https://github.com/staehlo/Demo_workflow_fastq_to_vcf
 #########################################
 sudo nextflow run metashot/mag-illumina --reads 'D22-004208*_R{1,2}*.fastq.gz' --run_metaplasmidspades --outdir results
