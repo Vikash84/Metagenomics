@@ -495,10 +495,18 @@ PERL5LIB="";
 for i in *gff3;do agat_sp_extract_sequences.pl --gff $i --fasta ${i/gff3}fasta -t cds -o ${i/gff3}cds.fasta;done
 for i in *cds.fasta;do sed "s/ .*//g" $i | sed "s/gene/CDS/g" | sed "s/\:/_/g" | sed "s/|/_/g" | sed "s/\//_/g" > ${i/cds/cds2};done
 for i in *cds2.fasta;do vk_multiFastaSingleFasta.sh $i;done
-
-
-
 for i in ORF1a ORF1ab ORF2 ORF3 ORF4 ORF5 ORF6 ORF7;do java -jar ~/softwares/FigTree_v1.4.4/lib/figtree.jar -graphic PDF -width 600 -height 800 ${i}_aligned_nogaps.fasta.raxml.support ${i}_tree.pdf;done
+
+### Steph PRRSv annotation + RFLP analysis #####
+for i in *fasta;do /home/vsingh/softwares/SPAR/SPAR/run2.py annotate --output ${i/fasta}gff3 $i;done
+for i in *gff3;do sed '5d;16d' $i | sed "s/ORF1ab/ORF1b/g" > ${i/.gff3/_ORF1b.gff3};done
+conda activate agat
+PERL5LIB="";
+for i in *_ORF1b.gff3;do agat_sp_extract_sequences.pl --gff $i --fasta ${i/_ORF1b.gff3}.fasta -t cds -o ${i/gff3}ORF.fasta;done
+for i in *ORF.fasta;do sed "s/-gene.*//g" $i| sed "s/:/_/g" > ${i/fasta/fasta2};done
+for i in *ORF.fasta2;do awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' $i > ${i/fasta2/fasta3};done
+for i in *ORF.fasta3;do vk_multiFastaSingleFasta.sh $i;done
+rm *ORF.fasta *ORF.fasta2
 
 
 ## nonopore
