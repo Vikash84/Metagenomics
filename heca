@@ -1,20 +1,30 @@
 data = read.csv('bigtable.tsv',header=T,sep='\t')
 taxonCounts = read.csv('taxonLevelCounts.tsv',header=T,sep='\t')
 View(data)
-viruses = data %>% filter(kingdom=="Viruses" & order!="Caudovirales")
+viruses = data %>% filter(kingdom=="Viruses")
+
+OR
+viruses = filter(data, family %in%  c("Partitiviridae","Herpesviridae","Reoviridae","Coronaviridae","Astroviridae","Arenaviridae","Paramyxoviridae","Poxviridae"))
 View(viruses)
+
 viralCounts1 = taxonCounts %>% filter(taxonLevel=='family',grepl('k_Viruses',taxonPath))
-viralCounts = viralCounts1 %>% filter(taxonLevel=='family',!grepl('f_Ackermannviridae|f_Myoviridae|f_Siphoviridae|f_Drexlerviridae|f_Retroviridae|f_Virgaviridae|f_unclassified|f_Mimiviridae',taxonPath))
+viralCounts = viralCounts1 %>% filter(taxonLevel=='family',grepl('f_Partitiviridae|f_Herpesviridae|f_Reoviridae|f_Coronaviridae|f_Astroviridae|f_Arenaviridae|f_Paramyxoviridae|f_Poxviridae',taxonPath))
 
 
 
-> df2=filter(df, family %in%  c("Partitiviridae","Herpesviridae","Reoviridae","Coronaviridae","Astroviridae","Arenaviridae","Paramyxoviridae","Poxviridae"))
-> virusesFiltered = df2
-> viralFiltCounts = virusesFiltered %>% 
-+     group_by(sampleID,family) %>% 
-+     summarise(n = sum(normCount))
+df2=filter(df, family %in%  c("Partitiviridae","Herpesviridae","Reoviridae","Coronaviridae","Astroviridae","Arenaviridae","Paramyxoviridae","Poxviridae"))
+virusesFiltered = df2
+viralFiltCounts = virusesFiltered %>% 
+     group_by(sampleID,family) %>% 
+     summarise(n = sum(normCount))
 `summarise()` has grouped output by 'sampleID'. You can override using the `.groups` argument.
-> ggplot(viralFiltCounts) +
-+     geom_bar(aes(x=sampleID,y=n,fill=family),position='fill',stat='identity') +
-+     coord_flip() +
-+     theme_bw()
+
+ggplot(viralFiltCounts) +
+     geom_bar(aes(x=sampleID,y=n,fill=family),position='fill',stat='identity') +
+     coord_flip() +
+     theme_bw()
+
+> viralFamCounts = viruses %>% group_by(family) %>% 
++     summarise(n=sum(normCount)) %>% 
++     arrange(desc(n))
+> viralFamCounts$family = factor(viralFamCounts$family,levels=viralFamCounts$family)
