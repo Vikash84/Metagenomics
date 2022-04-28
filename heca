@@ -28,3 +28,39 @@ ggplot(viralFiltCounts) +
 +     summarise(n=sum(normCount)) %>% 
 +     arrange(desc(n))
 > viralFamCounts$family = factor(viralFamCounts$family,levels=viralFamCounts$family)
+
+
+#################### HARYANA ###################
+data = read.csv('bigtable.tsv',header=T,sep='\t')
+taxonCounts = read.csv('taxonLevelCounts.tsv',header=T,sep='\t')
+viruses = filter(data, family %in%  c("Orthomyxoviridae","Paramyxoviridae","Herpesviridae","Coronaviridae","Astroviridae","Poxviridae","Pneumoviridae","Arenaviridae","Adenoviridae","Rhabdoviridae","Peribunyaviridae","Picornaviridae","Reoviridae","Flaviviridae","Papillomaviridae","Circoviridae","Caliciviridae"))
+ggplot(viruses) + 
+    geom_point(
+        aes(x=alnlen,y=pident,color=alnType,size=count),
+        alpha=0.1) + 
+    facet_wrap(~family)
+paramixoCounts = taxonCounts %>% filter(taxonLevel=='family',taxonName=='Paramyxoviridae')
+ggplot(paramixoCounts, aes(x = sampleID, y = normCount)) + geom_col(fill = '#0099f9') +coord_flip()
+
+viralFamCounts = viruses %>% 
+    group_by(family) %>% 
+    summarise(n=sum(normCount)) %>% 
+    arrange(desc(n))
+viralFamCounts$family = factor(viralFamCounts$family,levels=viralFamCounts$family)
+ggplot(viralFamCounts) +
+    geom_bar(aes(x=family,y=n),stat='identity') +
+    coord_flip()
+
+viralCounts = taxonCounts %>% filter(taxonLevel=='family',grepl('Orthomyxoviridae|Paramyxoviridae|Herpesviridae|Coronaviridae|Astroviridae|Poxviridae|Pneumoviridae|Arenaviridae|Adenoviridae|Rhabdoviridae|Peribunyaviridae|Picornaviridae|Reoviridae|Flaviviridae|Papillomaviridae|Circoviridae|Caliciviridae',taxonPath))
+ggplot(viralCounts) +
+    geom_bar(aes(x=sampleID,y=normCount,fill=taxonName),position='stack',stat='identity') +
+    coord_flip()
+    
+viralFiltCounts = viruses %>% 
+    group_by(sampleID,family) %>% 
+    summarise(n = sum(normCount))
+ggplot(viralFiltCounts) +
+    geom_bar(aes(x=sampleID,y=n,fill=family),position='fill',stat='identity') +
+    coord_flip() +
+    theme_bw()
+
