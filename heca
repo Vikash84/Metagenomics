@@ -31,6 +31,8 @@ ggplot(viralFiltCounts) +
 
 
 #################### HARYANA ###################
+getwd()
+setwd("~/vdl/dtra/haryana/")
 data = read.csv('bigtable.tsv',header=T,sep='\t')
 taxonCounts = read.csv('taxonLevelCounts.tsv',header=T,sep='\t')
 viruses = filter(data, family %in%  c("Orthomyxoviridae","Paramyxoviridae","Herpesviridae","Coronaviridae","Astroviridae","Poxviridae","Pneumoviridae","Arenaviridae","Adenoviridae","Rhabdoviridae","Peribunyaviridae","Picornaviridae","Reoviridae","Flaviviridae","Papillomaviridae","Circoviridae","Caliciviridae"))
