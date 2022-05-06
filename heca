@@ -1,3 +1,17 @@
+################ggtree###########################
+> library("treeio")
+> library("readxl")
+> library("tidyverse")
+> library("ggplot2")
+> library("phytools")
+> library("ggtree")
+> metadata <- read_xlsx("metadata.xlsx")
+> metadata$Isolates[!tree$tip.label %in% metadata$Isolates]
+> gg_simple <- ggtree(midpoint.root (tree)) %<+% metadata + geom_treescale(x = 0, y = 0, width = 0.001) + geom_tiplab(size = 3, align = TRUE) + coord_cartesian(clip = 'off')+ theme(plot.margin = margin(1,1,1,1, "cm")) + geom_tiplab(align = TRUE)
+> ggsave(filename = "tree.pdf" , device = "pdf", width = 12, height = 6 , units = "in" , limitsize = FALSE)
+> gg_simple + geom_tiplab(aes(label = MLST), color = "black", offset = 0.0025, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Serotype), color = "black", offset = 0.003, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Farm_Site), color = "black", offset = 0.0035, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Tissues_Disease), color = "black", offset = 0.0053, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = MLST), color = "black", offset = 0.01, size = 2, align = TRUE, linetype = NA )
+> dev.off()
+#################################################
 data = read.csv('bigtable.tsv',header=T,sep='\t')
 taxonCounts = read.csv('taxonLevelCounts.tsv',header=T,sep='\t')
 View(data)
