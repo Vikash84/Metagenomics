@@ -11,6 +11,11 @@
 > ggsave(filename = "tree.pdf" , device = "pdf", width = 12, height = 6 , units = "in" , limitsize = FALSE)
 > gg_simple + geom_tiplab(aes(label = MLST), color = "black", offset = 0.0025, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Serotype), color = "black", offset = 0.003, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Farm_Site), color = "black", offset = 0.0035, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Tissues_Disease), color = "black", offset = 0.0053, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = MLST), color = "black", offset = 0.01, size = 2, align = TRUE, linetype = NA )
 > dev.off()
+
+
+
+
+ggtree(root (tree, node = 26))
 #################################################
 data = read.csv('bigtable.tsv',header=T,sep='\t')
 taxonCounts = read.csv('taxonLevelCounts.tsv',header=T,sep='\t')
