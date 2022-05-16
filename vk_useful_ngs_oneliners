@@ -301,7 +301,7 @@ conda activate trinity-env
 
 for i in *R1_001.fastq.gz;do Trinity --seqType fq --left $i --right ${i/R1/R2} --max_memory 200G --CPU 50 --output ${i/R1*/trinity_out};done
 
-for i in Reoviridae.fa;do blastn -query $i -db /home/vsingh/softwares/ncbi_database/virus_genomes/rota.complete.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 100 -num_threads 50;done
+for i in Reoviridae.fa;do blastn -query $i -db /home/vsingh/softwares/ncbi_database/virus_genomes/rota.complete.fasta -out `basename ${i/fa/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 100 -num_threads 50;done
 
 #RVA
 for i in *blastn;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; do grep -i "$j" $i | grep "virus.A" | sort  -k15,15nr -k2,2nr| grep -vi partial|awk -F"\t" '{if($3 >= 50){print $0}}' |head -1 >> ${i/blastn/rota-A};done;done
