@@ -7,12 +7,16 @@
 > library("ggtree")
 > metadata <- read_xlsx("metadata.xlsx")
 > metadata$Isolates[!tree$tip.label %in% metadata$Isolates]
-> gg_simple <- ggtree(midpoint.root (tree)) %<+% metadata + geom_treescale(x = 0, y = 0, width = 0.001) + geom_tiplab(size = 3, align = TRUE) + coord_cartesian(clip = 'off')+ theme(plot.margin = margin(1,1,1,1, "cm")) + geom_tiplab(align = TRUE)
+> gg_simple <- ggtree(midpoint.root (tree)) %<+% metadata + geom_treescale(x = 0, y = 0, width = 0.001) + geom_tiplab(size = 3, align = TRUE) + coord_cartesian(clip = 'off')+ theme(plot.margin = margin(1,1,1,1, "cm"))
 > ggsave(filename = "tree.pdf" , device = "pdf", width = 12, height = 6 , units = "in" , limitsize = FALSE)
 > gg_simple + geom_tiplab(aes(label = MLST), color = "black", offset = 0.0025, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Serotype), color = "black", offset = 0.003, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Farm_Site), color = "black", offset = 0.0035, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = Tissues_Disease), color = "black", offset = 0.0053, size = 2, align = TRUE, linetype = NA) + geom_tiplab(aes(label = MLST), color = "black", offset = 0.01, size = 2, align = TRUE, linetype = NA )
 > dev.off()
 
 
+
+ggtree(midpoint.root (pp), color="blue", size = 3, ladderize=FALSE) + coord_cartesian(clip = 'off') + geom_tiplab(size = 6, align = TRUE) + theme_tree2(plot.margin=margin(6, 500, 6, 6))
+OR
+ggtree(midpoint.root (pp), color="blue", size = 3) + xlim(0, 1) + geom_tiplab(size = 6, align = TRUE) + theme_tree2()
 
 
 ggtree(root (tree, node = 26))
