@@ -310,7 +310,7 @@ for i in *rota-A2;do for j in VP1 VP2 VP3 VP4 VP6 VP7 NSP1 NSP2 NSP3 NSP4 NSP5; 
 for i in *rota-A2;do awk -F"\t" '{print $1"\t"$1"|"$5}' $i > ${i/rota-A2/rota-A-replace.ids};done
 for i in *rota-A;do vk_correct_orient_fasta_blastn.sh $i Reoviridae.fa;done
 for i in *rota-A.corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/.corr.fasta/-replace.ids} $i > ${i}2;done
-for i in *rota-C.corr.fasta2;do mv $i ${i/.corr.fasta2/.fasta};done
+for i in *rota-A.corr.fasta2;do mv $i ${i/.corr.fasta2/.fasta};done
 for i in *rota-A.fasta;do sed -i "s/>/>${i/-rota-A*}|/g" $i;done
 
 #RVB
