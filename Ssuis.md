@@ -96,7 +96,7 @@ tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min
 conda activate bactopia
 for i in fastq/*fastq.gz;do mv $i ${i/_001};done
 bactopia prepare fastq/ > fastqs.txt
-bactopia --fastqs fastqs.txt --datasets ~/datasets/ --species "Staphylococcus aureus" --max_cpus 50 --outdir saureus_06-02-2022
+bactopia --fastqs fastqs.txt --datasets /home/vsingh/datasets/ --species "Staphylococcus aureus" --outdir saureus_06-02-2022 -profile docker
 ```
 # fastANI analysis
 ```bash
