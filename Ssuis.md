@@ -98,6 +98,7 @@ for i in fastq/*fastq.gz;do mv $i ${i/_001};done
 bactopia prepare fastq/ > fastqs.txt
 bactopia --fastqs fastqs.txt --datasets /home/vsingh/datasets/ --species "Staphylococcus aureus" --outdir saureus_06-02-2022 -profile docker
 bactopia --wf staphtyper --bactopia saureus_06-02-2022 -profile docker
+bactopia --wf pangenome --bactopia saureus_06-02-2022 -profile docker
 ```
 # fastANI analysis
 ```bash
