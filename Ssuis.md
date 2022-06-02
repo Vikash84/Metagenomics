@@ -91,7 +91,11 @@ tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( 
 ```bash
 tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella
 ```
-
+# S.aureus analysis with bactopia
+```bash
+conda activate bactopia
+bactopia prepare fastq/ > fastqs.txt
+```
 # fastANI analysis
 ```bash
 conda activate assembly
