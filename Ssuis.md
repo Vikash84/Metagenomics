@@ -91,12 +91,13 @@ tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( 
 ```bash
 tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella
 ```
-# S.aureus analysis with bactopia
+# Staphylococcus aureus analysis with bactopia
 ```bash
 conda activate bactopia
 for i in fastq/*fastq.gz;do mv $i ${i/_001};done
 bactopia prepare fastq/ > fastqs.txt
 bactopia --fastqs fastqs.txt --datasets /home/vsingh/datasets/ --species "Staphylococcus aureus" --outdir saureus_06-02-2022 -profile docker
+bactopia --wf staphtyper --bactopia saureus_06-02-2022 -profile docker
 ```
 # fastANI analysis
 ```bash
