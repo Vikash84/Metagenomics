@@ -43,6 +43,11 @@ Or with complete vtaA sequences
 blastn -task blastn-short -query vtaA-complete.fasta -db D22-004701-2-repeat.fasta -out HPS.all_merged.blastn -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -max_target_seqs 5 -num_threads 50
 ```
 
+```bash
+for i in *R1*fastq;do tanoti -P 50 -p 1 -r vtaA-complete.fasta -i $i ${i/R1/R2} -o ${i/_BTIS*/.sam};done
+for i in *sam;do SAM2CONSENSUS -i $i -o ${i/sam/fasta};done
+```
+
 
 
 # SSuis Analysis
