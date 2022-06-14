@@ -1,3 +1,27 @@
+https://github.com/boasvdp/Ssuis_genomic_epidemiology/blob/master/workflow/scripts/abricate_to_phandango.py
+#!/usr/bin/env python3
+
+import pandas as pd
+import argparse
+import sys
+
+parser = argparse.ArgumentParser(description='Convert an ABRicate summary to Phandango format')
+
+parser.add_argument('input', help="Input ABRicate summary file", type=str)
+parser.add_argument("-o", "--output", dest="output", help="Output Phandango file", type=str, default=sys.stdout)
+
+args = parser.parse_args()
+
+df = pd.read_csv(args.input, dtype=str, sep = '\t', index_col=0)
+df.replace('.', 'absent', inplace=True)
+df.replace('[0-9.][0-9.]*', 'present', regex=True, inplace=True)
+df['name'] = df.index
+df['name'].replace('.tsv', '', regex=True, inplace=True)
+df['name'].replace('abricate_virulence_out/', '', regex=True, inplace=True)
+df.set_index('name', inplace=True)
+df.drop('NUM_FOUND', axis=1, inplace=True)
+df.to_csv(args.output, sep = ',')
+##########################################
 https://github.com/KathrynCampbell/MADDOG/blob/main/Nigeria_report.Rmd
 https://github.com/agmcfarland/FluPipeline/blob/main/sample_report.Rmd
 #########################################
