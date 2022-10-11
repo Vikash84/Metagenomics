@@ -541,6 +541,9 @@ for i in *cds2.fasta;do vk_multiFastaSingleFasta.sh $i;done
 for i in ORF1a ORF1ab ORF2 ORF3 ORF4 ORF5 ORF6 ORF7;do java -jar ~/softwares/FigTree_v1.4.4/lib/figtree.jar -graphic PDF -width 600 -height 800 ${i}_aligned_nogaps.fasta.raxml.support ${i}_tree.pdf;done
 
 ### Steph PRRSv annotation + RFLP analysis #####
+for i in Arteriviridae.fa; do diamond blastx -d ~/softwares/ncbi_database/virus_proteome/viral_refseq.dmnd -q $i -f 6 qseqid qlen qcovhsp stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore --sensitive --no-auto-append --top 10 --out ${i/fa/blastx};done
+vk_correct_orient_fasta_blastx.sh Arteriviridae.blastx Arteriviridae.fa
+
 for i in *fasta;do /home/vsingh/softwares/SPAR/SPAR/run2.py annotate --output ${i/fasta}gff3 $i;done
 for i in *gff3;do sed '5d;16d' $i | sed "s/ORF1ab/ORF1b/g" > ${i/.gff3/_ORF1b.gff3};done
 conda activate agat
