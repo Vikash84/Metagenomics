@@ -554,6 +554,10 @@ for i in *ORF.fasta2;do awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n 
 for i in *ORF.fasta3;do vk_multiFastaSingleFasta.sh $i;done
 rm *ORF.fasta *ORF.fasta2
 
+### calcivirus annotation
+mkdir calci
+staphb-tk vadr fcv.fasta ./calci
+
 
 ## nonopore
 
