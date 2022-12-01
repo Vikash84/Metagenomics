@@ -556,7 +556,7 @@ rm *ORF.fasta *ORF.fasta2
 
 ### calcivirus annotation
 mkdir calci
-staphb-tk vadr fcv.fasta ./calci
+staphb-tk vadr fcv.fasta calci --out_allfasta 
 
 
 ## nonopore
