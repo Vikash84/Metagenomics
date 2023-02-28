@@ -564,7 +564,8 @@ staphb-tk vadr fcv.fasta calci --out_allfasta
 viroconstrictor --input reads --output virocons --primers NONE --platform nanopore --reference ref.fa --threads 50 --features NONE --amplicon-type end-to-end
 
 
-
+### 
+python3 RISST.py -i *.fasta -r A_pleuropneumoniae_cps_locus_reference.gbk  -f
 
 
 
