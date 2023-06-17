@@ -105,6 +105,7 @@ bactopia --samples fastqs.txt -profile docker --datasets /home/vsingh/datasets -
 bactopia --wf staphtyper --bactopia Staphylococcus-aureus-out -profile docker
 bactopia --wf pangenome --bactopia Staphylococcus-aureus-out -profile docker
 bactopia --wf mlst --bactopia Staphylococcus-aureus-out -profile docker
+bactopia --wf abricate --bactopia Staphylococcus-aureus-out -profile docker
 ```
 # fastANI analysis
 ```bash
