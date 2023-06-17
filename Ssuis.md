@@ -102,8 +102,9 @@ conda activate bactopia-new
 for i in fastq/*fastq.gz;do mv $i ${i/_001};done
 bactopia prepare fastq/ > fastqs.txt
 bactopia --samples fastqs.txt -profile docker --datasets /home/vsingh/datasets --species "Staphylococcus aureus" --outdir Staphylococcus-aureus-out
-bactopia --wf staphtyper --bactopia saureus_06-02-2022 -profile docker
-bactopia --wf pangenome --bactopia saureus_06-02-2022 -profile docker
+bactopia --wf staphtyper --bactopia Staphylococcus-aureus-out -profile docker
+bactopia --wf pangenome --bactopia Staphylococcus-aureus-out -profile docker
+bactopia --wf mlst --bactopia Staphylococcus-aureus-out -profile docker
 ```
 # fastANI analysis
 ```bash
