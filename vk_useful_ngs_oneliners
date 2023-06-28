@@ -408,7 +408,7 @@ pigz *fastq
 
 
 ########## TREE MAKING REOVIRUS ###########
-for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" *fasta | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
+for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
 
 conda activate assembly
 
