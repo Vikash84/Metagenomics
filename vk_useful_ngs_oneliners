@@ -398,7 +398,7 @@ for i in *blastn2;do cut -f4 $i > ${i/blastn2/ref.ids};done
 for i in *ref.ids;do for j in `cat $i | cut -d" " -f1`;do grep -A1 ${j} reovirus.fasta | sed "/^--/d" | sed "s/ //g" >> ${i/ids/fasta};done;done
 pigz -d *fastq.gz
 for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
-for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/sam/fasta};done
+for i in *sam;do python2 sam2consensus.py -i $i -o ${i/sam/fasta};done
 for i in *tanoti.fasta;do cat $i/* > $i/${i/tanoti/merged};done
 for i in *tanoti.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" $i/${i/tanoti/merged} >> ${i/tanoti/refASM};done;done
 for i in *refASM.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do sed -i "s/${j}.*/$j|$j/g" $i;done;done
@@ -408,7 +408,7 @@ pigz *fastq
 
 
 ########## TREE MAKING REOVIRUS ###########
-for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" tt2 | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
+for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS; do grep -A1 -i "$j" *fasta | sed "/^--/d" | rev | cut -d"|" -f2- | rev > ${j}.fasta;done
 
 conda activate assembly
 
@@ -421,6 +421,13 @@ vk_concat_alignments.py . > concat.fasta
 for i in *nogap*;do sed -i "/^>/ s/$/\|${i/_ali*}/g" $i;done
 for i in concat.fasta;do sed -i "/^>/ s/$/\|concat/g" $i;done
 for i in *.fasta;do ~/softwares/raxml-ng/build/raxml-ng --all --msa $i --model GTR+G --tree pars{10} --bs-trees 100 --threads 50;done
+
+cd ..
+for i in *aligned.fasta;do mafft --globalpair  --reorder --thread 50 --maxiterate 1000 ${i}.fasta > ${i}_aligned2.fasta;done
+
+ls -ltr
+
+
 for i in *support;do java -jar ~/softwares/FigTree_v1.4.4/lib/figtree.jar -graphic PDF -width 900 -height 1300 $i $i.pdf;done
 
 
