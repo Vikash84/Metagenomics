@@ -574,5 +574,13 @@ viroconstrictor --input reads --output virocons --primers NONE --platform nanopo
 ### 
 python3 RISST.py -i *.fasta -r A_pleuropneumoniae_cps_locus_reference.gbk  -f
 
+##nf-core/mag
+nextflow run nf-core/mag -r 2.2.1 -profile singularity --input '*_R{1,2}*.fastq.gz' --outdir myco
+
+
+##Reference-free clustering and consensus forming of long-read amplicon sequencing
+https://github.com/ksahlin/NGSpeciesID
+
+
 
 
