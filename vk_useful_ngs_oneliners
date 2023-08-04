@@ -487,6 +487,11 @@ for i in *refASM.fasta;do sed -i "s/_tanoti//g" $i;done
 for i in *refASM.fasta;do cut -d"|" -f1,3 $i > ${i/ASM/ASM2};done
 pigz *.fastq
 
+#### octoflu ##########
+docker pull flucrew/octoflu
+docker run -it -v ${PWD}:/data flucrew/octoflu:latest /bin/bash
+bash octoFLU.sh /data/flu-sequence.fasta
+
 
 
 
