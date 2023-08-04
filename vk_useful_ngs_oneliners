@@ -458,7 +458,7 @@ for i in *blastn2;do vk_correct_orient_fasta_blastn.sh $i ${i/blastn2/out}/Trini
 for i in *corr.fasta;do awk 'FNR==NR { array[$1]=$2; next } { for (i in array) gsub(i, array[i]) }1' ${i/blastn2*/rep.ids} $i > ${i/_trinity*/.fasta};done
 pigz -d *fastq.gz
 for i in *VRIS_S*.fasta;do tanoti -P 50 -p 1 -r $i -i ${i/VRIS*/VRIS*R1*fastq} ${i/VRIS*/VRIS*R1*fastq} -o ${i/VRIS*/VRIS.sam};done
-for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/.sam/.fasta};done
+for i in *sam;do sam2consensus.py -i $i -o ${i/.sam/.fasta};done
 for i in *VRIS.fasta;do for j in `seq 1 1 8`; do grep -i "segment-$j" $i/*merged.fasta >> ${i/VRIS/refASM};done;done
 for i in *VRIS.fasta;do for j in `seq 1 1 8`; do grep -A1 -i "segment-$j" $i/*merged.fasta >> ${i/VRIS/refASM};done;done
 pigz *fastq
@@ -474,7 +474,7 @@ for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/ .*segment/_segment/g"
 for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/ /-/g" $i ;done;done
 pigz -d *fastq.gz
 for i in *R1_001.fastq;do tanoti -P 50 -p 1 -r ${i/R1*/trinity_ref.fasta} -i $i ${i/_R1/_R2} -o ${i/R1*/tanoti.sam};done
-for i in *sam;do python2 ~/vdl/Mor_Project_151/rota/D20.008687.1/sam2consensus/sam2consensus.py -i $i -o ${i/.sam/.fasta};done
+for i in *sam;do sam2consensus.py -i $i -o ${i/.sam/.fasta};done
 for i in *tanoti.fasta;do for j in `seq 1 1 8`;do cat $i/* | grep -A1 -i segment-$j >> ${i/tanoti*/refASM.fasta};done;done
 for i in *refASM.fasta;do for j in `seq 1 1 8`; do sed -i "s/c25.*_segment/segment/g" $i;done;done
 for i in *refASM.fasta;do sed -i "s/_tanoti//g" $i;done
