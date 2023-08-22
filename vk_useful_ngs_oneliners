@@ -587,5 +587,11 @@ nextflow run nf-core/mag -r 2.2.1 -profile singularity --input '*_R{1,2}*.fastq.
 https://github.com/ksahlin/NGSpeciesID
 
 
+####### s hyicus
+awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { printf "%s", n }' core_gene_alignment.aln > core_gene_alignment.aln2
+for i in `cat tt2`;do grep -w -A1 "${i}" core_gene_alignment.aln2 >> core_gene_alignment.aln3; done
+panito core_gene_alignment.aln3 > core_gene_alignment.csv
+
+
 
 
