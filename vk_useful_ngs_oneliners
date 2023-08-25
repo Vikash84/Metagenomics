@@ -422,8 +422,8 @@ vk_concat_alignments.py . > concat.fasta
 # for i in concat.fasta;do sed -i "/^>/ s/$/\|concat/g" $i;done
 for i in *.fasta;do ~/softwares/raxml-ng/build/raxml-ng --all --msa $i --model GTR+G --tree pars{10} --bs-trees 100 --threads 50;done
 
-cd ..
-for i in *aligned.fasta;do mafft --globalpair  --reorder --thread 50 --maxiterate 1000 ${i}.fasta > ${i}_aligned2.fasta;done
+for i in *.fasta;do mafft --globalpair  --reorder --thread 50 --maxiterate 1000 ${i} > ${i}2;done
+for i in *fasta2;do panito $i > ${i/fasta2/csv};done
 
 ls -ltr
 
