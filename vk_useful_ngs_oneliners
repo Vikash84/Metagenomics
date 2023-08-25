@@ -413,13 +413,13 @@ for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigm
 conda activate assembly
 
 for i in lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS;do mafft --globalpair --thread 50 --maxiterate 1000 ${i}.fasta > ${i}_aligned.fasta;done
-for i in *aligned.fasta;do trimal -in $i -out ${i/.fasta/_nogaps.fasta} -gt 0.9;done
+for i in *aligned.fasta;do trimal -in $i -out ${i/.fasta/_nogaps.fasta} -gt 0.6;done
 mkdir cocat_tree
 mv *nogaps.fasta cocat_tree
 cd cocat_tree
 vk_concat_alignments.py . > concat.fasta
-for i in *nogap*;do sed -i "/^>/ s/$/\|${i/_ali*}/g" $i;done
-for i in concat.fasta;do sed -i "/^>/ s/$/\|concat/g" $i;done
+# for i in *nogap*;do sed -i "/^>/ s/$/\|${i/_ali*}/g" $i;done
+# for i in concat.fasta;do sed -i "/^>/ s/$/\|concat/g" $i;done
 for i in *.fasta;do ~/softwares/raxml-ng/build/raxml-ng --all --msa $i --model GTR+G --tree pars{10} --bs-trees 100 --threads 50;done
 
 cd ..
