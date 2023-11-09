@@ -597,6 +597,7 @@ ssh vsingh@login.msi.umn.edu
 ssh vsingh@mesabi.msi.umn.edu
 srun -N 1 -n 1 -t 4:00:00 -p interactive --tmp 20gb --pty bash
 s3cmd sync /home/vdl/data_delivery/umgc/ s3://vikash
+s3cmd ls s3://vikash/
 
 
 
