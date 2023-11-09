@@ -592,6 +592,12 @@ awk '!/^>/ { printf "%s", $0; n = "\n" } /^>/ { print n $0; n = "" } END { print
 for i in `cat tt2`;do grep -w -A1 "${i}" core_gene_alignment.aln2 >> core_gene_alignment.aln3; done
 panito core_gene_alignment.aln3 > core_gene_alignment.csv
 
+####### amzon s3 data back-ups
+ssh vsingh@login.msi.umn.edu
+ssh vsingh@mesabi.msi.umn.edu
+srun -N 1 -n 1 -t 4:00:00 -p interactive --tmp 20gb --pty bash
+s3cmd sync /home/vdl/data_delivery/umgc/ s3://vikash
+
 
 
 
