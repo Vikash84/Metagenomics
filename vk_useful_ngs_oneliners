@@ -600,5 +600,8 @@ s3cmd sync /home/vdl/data_delivery/umgc/ s3://vikash
 s3cmd ls s3://vikash/
 
 
+s3cmd sync /home/skumar/data_release/umgc/data_delivery s3://sunil-mor
+
+
 
 
