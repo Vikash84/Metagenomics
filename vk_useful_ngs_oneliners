@@ -593,6 +593,8 @@ for i in `cat tt2`;do grep -w -A1 "${i}" core_gene_alignment.aln2 >> core_gene_a
 panito core_gene_alignment.aln3 > core_gene_alignment.csv
 
 ####### amzon s3 data back-ups
+https://www.msi.umn.edu/support/faq/how-do-i-use-second-tier-storage-command-line
+
 ssh vsingh@login.msi.umn.edu
 srun -N 1 -n 1 -t 4:00:00 -p interactive --tmp 20gb --pty bash
 ssh vsingh@mesabi.msi.umn.edu
