@@ -490,6 +490,9 @@ pigz *.fastq
 #### octoflu ##########
 docker pull flucrew/octoflu
 docker run -it -v ${PWD}:/data flucrew/octoflu:latest /bin/bash
+git clone https://github.com/flu-crew/octoFLU.git
+cd octoFLU
+makeblastdb -in ./reference_data/reference.fa -dbtype nucl
 bash octoFLU.sh /data/flu-sequence.fasta
 
 
