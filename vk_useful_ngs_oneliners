@@ -133,6 +133,10 @@ https://github.com/marbl/canu/issues/1674
 tmp=${a#*_}   # remove prefix ending in "_"
 b=${tmp%_*}   # remove suffix starting with "_"
 
+## Metaphlan4 (https://huttenhower.sph.harvard.edu/metaphlan)
+conda activate metaphlan4-env
+for i in *R1_001.fastq.gz;do metaphlan $i,${i/R1/R2} --add_viruses --bowtie2out ${i/_S*/_metagenome.bowtie2.bz2} --nproc 50 --input_type fastq -o ${i/_S*/_profiled_metagenome.txt};done
+
 
 ## Metaphlan3 (https://huttenhower.sph.harvard.edu/metaphlan)
 conda activate metaphlan3-env
