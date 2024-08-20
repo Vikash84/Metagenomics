@@ -2,7 +2,7 @@
 
 ### sample sheet preparation
 ```bash
-for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples.tab;done
+for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples.tab;done
 
 for i in *fasta;do echo -e "${i/.fasta*}\tGENOME\t`pwd`/$i" >> samples.tab;done
 ```
@@ -44,7 +44,7 @@ blastn -task blastn-short -query vtaA-complete.fasta -db D22-004701-2-repeat.fas
 ```
 
 ```bash
-for i in *R1*fastq;do tanoti -P 50 -p 1 -r vtaA-complete.fasta -i $i ${i/R1/R2} -o ${i/_BTIS*/.sam};done
+for i in *R1*fastq;do tanoti -P 50 -p 1 -r vtaA-complete.fasta -i $i ${i/R1/R2} -o ${i/_S*/.sam};done
 for i in *sam;do SAM2CONSENSUS -i $i -o ${i/sam/fasta};done
 ```
 
@@ -86,7 +86,7 @@ conda activate tormes-1.3.0
 ### sample sheet preparation
 ```bash
 echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
-for i in *R1_001.fastq.gz;do echo -e "${i/_BTIS*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
+for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
 ```
 ### E.coli
 ```bash
