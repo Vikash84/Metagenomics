@@ -1,5 +1,3 @@
-
-
 https://training.bactgen.sanger.ac.uk/#/Advanced_Bioinformatics/
 
 
@@ -333,7 +331,12 @@ Ampliseq nf-core
 sudo nextflow run nf-core/ampliseq -r 2.1.1 -profile docker --input "data" --FW_primer "GTGYCAGCMGCCGCGGTAA" --RV_primer "GGACTACNVGGGTWTCTAAT" --dada_tax_agglom_max 8 --qiime_tax_agglom_max 7
 
 
-nextflow run nf-core/ampliseq -r 2.10.0 -profile singularity \
+
+sudo nextflow run nf-core/ampliseq -r 2.11.0 -profile docker --input_folder './species/' --outdir nfcore_ampliseq_GTDB --min_read_counts 1000 --ignore_empty_input_files --ignore_failed_trimming --ignore_failed_filtering --skip_cutadapt --trunclenf 200 --trunclenr 150 --vsearch_cluster --filter_ssu "bac" --exclude_taxa "mitochondria,chloroplast,archaea" --metadata_category_barplot "condition" --tax_agglom_max 7 --picrust --ancombc --dada_ref_taxonomy gtdb=R09-RS220 --dada_taxonomy_rc
+
+
+
+nextflow run nf-core/ampliseq -r 2.11.0 -profile singularity \
 --input samplesheet.tsv \
 --metadata metadata.tsv \
 --outdir nfcore_ampliseq_GTDB \
