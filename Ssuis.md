@@ -86,7 +86,8 @@ pan-geneD
 pan-geneE
 pan-geneH
 
-vk_abricate_to_phandango.py -i summary.tab -o summary.csv -c 7
+abricate --summary *tab > summary.tab
+vk_abricate_to_phandango.py -i summary.tab -o summary.csv -c 70
 cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -nf column.names | cut -f1 -d: | paste -sd,) summary.csv > virulence-genes.csv
 ```
 
