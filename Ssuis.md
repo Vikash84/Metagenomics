@@ -108,6 +108,63 @@ for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> s
 ```bash
 tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia
 ```
+
+### 
+```bash
+# Adhesin genes
+Z2206
+agn43
+c3610
+cah
+cfaB
+eaeH
+eaeX
+ecpD
+ehaA
+fim41
+fimF
+fimG
+paa
+papG
+tia
+tlra
+upaG/ehaG
+
+# Toxins
+aec30
+astA
+eltA
+eltB
+estIa
+astA
+stb
+stlv-iivb
+stx2eB
+vat
+
+# Hemolysins
+hlyA
+hlyB
+hlyC
+hlyD
+hlyE
+
+# fed-genes
+fedA
+fedC
+fedD
+fedE
+fedF
+
+
+abricate --summary *tab > summary.tab
+vk_abricate_to_phandango.py -i summary.tab -o summary.csv -c 70
+cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -nf column.names | cut -f1 -d: | paste -sd,) summary.csv > virulence-genes.csv
+```
+
+
+
+
 ### Salmonella
 ```bash
 tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella
