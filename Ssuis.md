@@ -71,6 +71,8 @@ git clone https://github.com/streplab/SsuisSerotyping_pipeline.git
 conda activate srst2-env
 for i in *L001_R1_001.fastq;do mv $i ${i/L001_R1_001.fastq/R1_001.fastq};done
 for i in *L001_R2_001.fastq;do mv $i ${i/L001_R2_001.fastq/R2_001.fastq};done
+
+./Ssuis_serotypingPipeline.pl --fastq_directory `pwd`/data --forward _R1_001 --reverse _R2_001 --ends pe
 ```
 ### Ssuis verulence gene selection from abricate file
 ```bash
@@ -89,11 +91,6 @@ pan-geneH
 abricate --summary *tab > summary.tab
 vk_abricate_to_phandango.py -i summary.tab -o summary.csv -c 70
 cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -nf column.names | cut -f1 -d: | paste -sd,) summary.csv > virulence-genes.csv
-```
-
-#
-```bash
-./Ssuis_serotypingPipeline.pl --fastq_directory `pwd`/data --forward _R1_001 --reverse _R2_001 --ends pe
 ```
 
 # tormes-1.3.0 E.coli and salmonella analysis
