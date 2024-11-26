@@ -312,6 +312,7 @@ https://www.chpc.utah.edu/documentation/software/singularity.php
 
 
 nextflow run angelovangel/nextflow-kraken2 --fqpattern *_R{1,2}_001.fastq.gz --kraken_db ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/minikraken_8GB_202003.tgz --outdir test2
+sudo nextflow run angelovangel/nextflow-kraken2 --readsdir . --fqpattern "*_R{1,2}_001.fastq.gz" --kraken_db ~/vdl/gridion/even/minikraken_8GB_202003.tgz --outdir result
 
 ##Virontus viral Oxford Nanopore sequence analysis pipeline
 nextflow run peterk87/nf-virontus -profile singularity --reads "fastq_pass/all.fastq" --ref_fasta ref.fasta --low_coverage 1
