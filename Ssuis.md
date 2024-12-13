@@ -167,7 +167,7 @@ cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -w -nf column.names |
 
 ### Salmonella
 ```bash
-tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella
+tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella --assembler megahit
 ```
 # Staphylococcus aureus analysis with bactopia
 ```bash
