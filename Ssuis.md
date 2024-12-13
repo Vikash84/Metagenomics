@@ -106,7 +106,7 @@ for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> s
 ```
 ### E.coli
 ```bash
-tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia --assembler megahit
 ```
 
 ### 
