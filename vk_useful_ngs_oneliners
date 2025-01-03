@@ -527,7 +527,7 @@ for i in *out;do blastn -query $i/inch*fa -db ~/softwares/ncbi_database/flu_data
 for i in *blastn;do for j in `seq 1 1 8`;do grep -i "segment $j" $i | awk -F"\t" '$3 >= 50 {print $0}' | sed "s/ /./g" | sort  -k2,2nr -k15,15nr | grep -v -i partial | head -1 >> ${i}2;done;done
 for i in *blastn2;do cut -f4 $i | cut -d"." -f1 > ${i/blastn2/ref.ids};done
 #for i in *ref.ids;do epost -input $i -db nucleotide | efetch -format fasta > ${i/ids/fasta};done
-for i in *ref.ids;do for j in `cat $i | cut -d" " -f1`;do grep -A1 ${j} /home/vsingh/softwares/ncbi_database/flu_database/flu.fasta | sed "/^--/d" | sed "s/ //g" >> ${i/ids/fasta};done;done
+for i in *ref.ids;do for j in `cat $i | cut -d" " -f1`;do grep -A1 ${j} /home/vsingh/softwares/ncbi_database/flu_database/flu.fasta | sed "/^--/d" >> ${i/ids/fasta};done;done
 for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/segment\ ${j}.*/segment\ ${j}/g" $i;done;done
 for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/ .*segment/_segment/g" $i;done;done
 for i in *ref.fasta;do for j in `seq 1 1 8`; do sed -i "s/ /-/g" $i ;done;done
