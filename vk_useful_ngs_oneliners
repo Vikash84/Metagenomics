@@ -1,4 +1,5 @@
-for i in *fasta;do abricate --db pmut $i > ${i/fasta/tab};done
+for i in *fasta;do abricate --db pmut $i --minid 60 --mincov 60 > ${i/fasta/tab};done
+abricate --summary *tab > summary.tab
 
 https://training.bactgen.sanger.ac.uk/#/Advanced_Bioinformatics/
 
