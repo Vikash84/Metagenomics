@@ -1,5 +1,6 @@
 for i in *fasta;do abricate --db pmut $i --minid 60 --mincov 60 > ${i/fasta/tab};done
 abricate --summary *tab > summary.tab
+vk_abricate_to_binary.py -i summary.tab -o binary -c 60
 
 https://training.bactgen.sanger.ac.uk/#/Advanced_Bioinformatics/
 
