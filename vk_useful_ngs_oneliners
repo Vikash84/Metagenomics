@@ -1,3 +1,5 @@
+for i in *fasta;do abricate --db pmut $i > ${i/fasta/tab};done
+
 https://training.bactgen.sanger.ac.uk/#/Advanced_Bioinformatics/
 
 
