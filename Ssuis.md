@@ -93,7 +93,7 @@ vk_abricate_to_phandango.py -i summary.tab -o summary -c 70
 cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -w -nf column.names | cut -f1 -d: | paste -sd,) summary.csv > virulence-genes.csv
 ```
 
-# tormes-1.3.0 E.coli and salmonella analysis
+# tormes-1.3.0 
 ```bash
 conda deactivate
 PERL5LIB="";
@@ -104,9 +104,17 @@ conda activate tormes-1.3.0
 echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
 for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
 ```
+### Ssuis
+```
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ssuis_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db ssuis_virulence
+```
+### Actinobacillus pleuropneumoniae(APP)
+```
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output app_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db app_apx
+```
 ### E.coli
 ```bash
-tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia --assembler megahit
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia --assembler megahit
 ```
 
 ### 
@@ -167,7 +175,7 @@ cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -w -nf column.names |
 
 ### Salmonella
 ```bash
-tormes --metadata samples.tab --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella --assembler megahit
+tormes --metadata samples.tab --gene_min_id 70 --gene_min_cov 70 --output Salmonella_TORMES_2021 --threads 32 --min_len 36 --genera Salmonella --assembler megahit
 ```
 # Staphylococcus aureus analysis with bactopia
 ```bash
