@@ -1,3 +1,7 @@
+https://www.spaam-community.org/intro-to-ancient-metagenomics-book/functional-profiling.html
+
+
+
 for i in *fasta;do abricate --db pmut $i --minid 60 --mincov 60 > ${i/fasta/tab};done
 abricate --summary *tab > summary.tab
 vk_abricate_to_binary.py -i summary.tab -o binary -c 60
