@@ -181,6 +181,14 @@ head -1 summary.csv > summary.csv2
 for i in `cat tt`;do grep $i summary.csv >> summary.csv2;done
 mv summary.csv2 ../../AMR-resfinder.csv2
 
+pangenome
+vk_multifasta2singlelinefasta.sh core_gene_alignment.aln
+for i in `cat tt`;do grep -A1 $i core_gene_alignment.aln2 >> core_gene_alignment.aln3;done
+panito core_gene_alignment.aln3 > core_gene_alignment_ANI.csv
+snp-dists core_gene_alignment.aln3 > core_gene_alignment_SNP.csv
+mv core_gene_alignment_ANI.csv ../
+mv core_gene_alignment_SNP.csv ../
+
 ```
 
 
