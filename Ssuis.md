@@ -168,6 +168,19 @@ fedF
 abricate --summary *tab > summary.tab
 vk_abricate_to_phandango.py -i summary.tab -o summary -c 70
 cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -w -nf column.names | cut -f1 -d: | paste -sd,) summary.csv > virulence-genes.csv
+sed -i "s/_ecoli_virulence.tab//g" virulence-genes.csv
+head -1 virulence-genes.csv > virulence-genes.csv2
+for i in `cat tt`;do grep $i virulence-genes.csv >> virulence-genes.csv2;done
+mv virulence-genes.csv2 ../../
+
+AMR genes
+abricate --summary *tab > summary.tab
+vk_abricate_to_phandango.py -i summary.tab -o summary -c 70
+sed -i "s/_resfinder.tab//g" summary.csv
+head -1 summary.csv > summary.csv2
+for i in `cat tt`;do grep $i summary.csv >> summary.csv2;done
+mv summary.csv2 ../../AMR-resfinder.csv2
+
 ```
 
 
