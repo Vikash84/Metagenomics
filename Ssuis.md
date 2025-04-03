@@ -112,6 +112,10 @@ tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ssuis_TORMES-"$( 
 ```
 tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output app_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db app_apx
 ```
+### Pasteurella multocida (pmut)
+```
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output app_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db pmut_virulence
+```
 ### E.coli
 ```bash
 tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ecoli_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --custom_genes_db ecoli_virulence --threads 32 --min_len 36 --genera Escherichia --assembler megahit
