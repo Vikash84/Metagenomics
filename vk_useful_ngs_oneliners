@@ -439,6 +439,9 @@ for i in *fasta;do sed -i "s/(.*)//g" $i;done
 
 ##TRV reference based
 #### MEGAHIT ###
+conda activate blast
+conda activate --stack python2
+conda activate --stack lazypipe
 cp ~/softwares/ncbi_database/reovirus/reovirus.fasta* .
 for i in *R1_001.fastq.gz;do megahit -1 $i -2 ${i/R1/R2} -o ${i/R1*/megahit_out};done
 for i in *out;do blastn -task blastn -query $i/final.contigs.fa -db reovirus.fasta -out `basename ${i/out/blastn}` -max_hsps 1 -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore" -evalue 1e-05 -max_target_seqs 50 -num_threads 50;done
