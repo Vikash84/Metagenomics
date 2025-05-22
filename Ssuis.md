@@ -89,8 +89,9 @@ pan-geneE
 pan-geneH
 
 abricate --summary *tab > summary.tab
-vk_abricate_to_phandango.py -i summary.tab -o summary -c 70
-cut -d"," -f1,$(head -n1 summary.csv | tr '\,' '\n' | grep -w -nf column.names | cut -f1 -d: | paste -sd,) summary.csv > virulence-genes.csv
+vk_abricate_to_binary.py -i summary.tab -o summary -c 70
+cut -f1,$(head -n1 summary.tsv | tr '\t' '\n' | grep -w -nf column.names | cut -f1 -d: | paste -sd,) summary.tsv > ssuis_vf
+sed -i "s/_ssuis_vf.tab//g" ssuis_vf
 ```
 
 # tormes-1.3.0 
