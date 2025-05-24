@@ -104,10 +104,12 @@ conda activate tormes-1.3.0
 ```bash
 echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
 for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
+for i in *fasta;do echo -e "${i/.fasta*}\tGENOME\t`pwd`/$i" >> samples_"$( date +"%Y-%m-%d" )".tab;done
+
 ```
 ### Ssuis
 ```
-tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ssuis_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db ssuis_virulence
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output ssuis_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db ssuis_vf
 ```
 ### Actinobacillus pleuropneumoniae(APP)
 ```
@@ -115,7 +117,7 @@ tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output app_TORMES-"$( da
 ```
 ### Pasteurella multocida (pmut)
 ```
-tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output pmut_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 70 --gene_min_cov 70 --threads 32 --min_len 36 --assembler megahit --custom_genes_db pmut_virulence
+tormes --metadata samples_"$( date +"%Y-%m-%d" )".tab --output pmut_TORMES-"$( date +"%Y-%m-%d" )" --gene_min_id 60 --gene_min_cov 60 --threads 32 --min_len 36 --assembler megahit --custom_genes_db pmut_vf
 ```
 ### E.coli
 ```bash
