@@ -1,3 +1,14 @@
+echo -e "id,group,assembler,fasta" >> samples_"$( date +"%Y-%m-%d" )".csv
+for i in *fasta*;do echo -e "${i/.fasta*},0,SPAdes,`pwd`/$i" >> samples_"$( date +"%Y-%m-%d" )".csv;done
+
+echo -e "sample,group,short_reads_1,short_reads_2,long_reads" >> samplesheet.csv
+for i in *fastq*;do echo -e "${i/.fastq*},0,`pwd`/$i",, >> samplesheet.csv;done
+
+nextflow run nf-core/mag -r 3.4.0 -profile singularity --assembly_input samples_2025-05-24.csv --input samplesheet.csv --single_end --outdir bhyo_mag
+
+
+
+
 https://www.spaam-community.org/intro-to-ancient-metagenomics-book/functional-profiling.html
 
 
