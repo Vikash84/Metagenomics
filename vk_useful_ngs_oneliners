@@ -474,23 +474,29 @@ pigz *fastq
 #!/bin/bash
 set -euo pipefail
 
+conda activate blast
+conda activate --stack python2
+conda activate --stack lazypipe
+
+cp ~/softwares/ncbi_database/reovirus/reovirus.fasta* .
+
 genes=(lambda-A lambda-B lambda-C mu-A mu-B mu-NS sigma-A sigma-B sigma-C sigma-NS)
 
-# Reference assembly
+# Assembly
 for fq1 in *R1_001.fastq.gz; do
     fq2="${fq1/R1/R2}"
     out_dir="${fq1/R1*/megahit_out}"
     megahit -1 "$fq1" -2 "$fq2" -o "$out_dir"
 done
 
-# BLASTN annotation
-for out_dir in *out; do
+# BLASTN
+for out_dir in *megahit_out; do
     blastn -task blastn -query "$out_dir/final.contigs.fa" -db reovirus.fasta \
-        -out "$(basename "${out_dir/out/blastn}")" -max_hsps 1 \
+        -out "$(basename "${out_dir/megahit_out/blastn}")" -max_hsps 1 \
         -outfmt "6 qseqid qlen qcovs stitle slen pident length mismatch gapopen qstart qend sstart send evalue bitscore"
 done
 
-# Gene filtering and extraction
+# Filter for genes
 for blast_file in *blastn; do
     for gene in "${genes[@]}"; do
         grep -i "$gene" "$blast_file" | grep -v KR9979 | grep -v MG869811 \
@@ -498,6 +504,57 @@ for blast_file in *blastn; do
     done
 done
 
+# Extract reference IDs
+for blastn2 in *blastn2; do
+    cut -f4 "$blastn2" > "${blastn2/blastn2/ref.ids}"
+done
+
+# Fetch reference sequences
+for refids in *ref.ids; do
+    while read -r id; do
+        grep -A1 "$id" reovirus.fasta | sed '/^--/d' | sed 's/ //g' >> "${refids/ids/fasta}"
+    done < <(cut -d" " -f1 "$refids")
+done
+
+# Decompress fastq
+pigz -d *fastq.gz
+
+# Mapping
+for fq1 in *R1_001.fastq; do
+    tanoti -P 50 -p 1 -r "${fq1/R1*/megahit_ref.fasta}" -i "$fq1" "${fq1/_R1/_R2}" -o "${fq1/R1*/tanoti.sam}"
+done
+
+# Consensus
+for sam in *sam; do
+    sam2consensus.py -i "$sam" -o "${sam/sam/fasta}"
+done
+
+# Merge
+for tfasta in *tanoti.fasta; do
+    cat "$tfasta"/* > "$tfasta/${tfasta/tanoti/merged}"
+done
+
+# Gene-specific consensus
+for tfasta in *tanoti.fasta; do
+    for gene in "${genes[@]}"; do
+        grep -A1 -i "$gene" "$tfasta/${tfasta/tanoti/merged}" >> "${tfasta/tanoti/refASM}"
+    done
+done
+
+# Clean FASTA headers
+for refasm in *refASM.fasta; do
+    for gene in "${genes[@]}"; do
+        sed -i "s/${gene}.*/$gene|$gene/g" "$refasm"
+    done
+done
+
+# Re-compress fastq
+pigz *fastq
+
+# Optional: Clean up
+# rm -rf *megahit_out *blastn* *ref.ids *tanoti.fasta
+
+echo "Pipeline complete."
 
 ###### TRINITY #####
 
