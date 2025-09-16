@@ -11,8 +11,8 @@ nextflow run nf-core/mag -r 3.4.0 -profile singularity --assembly_input samples_
 ### Orthoreovirus
 echo -e "sample,group,short_reads_1,short_reads_2,long_reads" >> samplesheet.csv
 for i in *fastq*;do echo -e "${i/.fastq*},0,`pwd`/$i",, >> samplesheet.csv;done
-nextflow run Vikash84/vaper -profile singularity --input samplesheet.csv --refs Orthoreovirus.tar.gz --cons_assembler irma --cons_assembly_type plurality --outdir vk_results --max_cpus 36 --max_memory 100.GB -resume
-
+nextflow run doh-jdj0303/vaper -profile singularity --input samplesheet.csv --refs Orthoreovirus.tar.gz --cons_assembler irma --cons_assembly_type plurality --cons_allele_depth 1 --outdir vk_results --max_cpus 36 --max_memory 100.GB -resume
+nextflow run doh-jdj0303/vaper -r v1.0 -profile singularity --input samplesheet.csv --refs Orthoreovirus.tar.gz --cons_allele_depth 1 --outdir vk-results3 --max_cpus 36 --max_memory 100.GB -resume
 
 
 
