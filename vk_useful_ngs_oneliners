@@ -1,3 +1,9 @@
+nextflow run angelovangel/nextflow-kraken2 --readsdir . --fqpattern "*.fastq.gz" --kraken_db s3://genome-idx/kraken/minikraken_8GB_202003.tgz --outdir result3
+
+
+
+
+
 echo -e "id,group,assembler,fasta" >> samples_"$( date +"%Y-%m-%d" )".csv
 for i in *fasta*;do echo -e "${i/.fasta*},0,SPAdes,`pwd`/$i" >> samples_"$( date +"%Y-%m-%d" )".csv;done
 
