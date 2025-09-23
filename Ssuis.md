@@ -106,6 +106,9 @@ echo -e "Samples\tRead1\tRead2" >> samples_"$( date +"%Y-%m-%d" )".tab
 for i in *R1_001.fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\t`pwd`/${i/R1/R2}" >> samples_"$( date +"%Y-%m-%d" )".tab;done
 for i in *fasta;do echo -e "${i/.fasta*}\tGENOME\t`pwd`/$i" >> samples_"$( date +"%Y-%m-%d" )".tab;done
 
+Ion-Torrent
+for i in *fastq.gz;do echo -e "${i/_S*}\t`pwd`/$i\tSINGLE" >> samples_"$( date +"%Y-%m-%d" )".tab;done
+
 ```
 ### Ssuis
 ```
