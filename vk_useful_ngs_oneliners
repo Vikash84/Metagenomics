@@ -799,6 +799,9 @@ s3cmd ls s3://vikash/* --recursive | grep "D23-031367"
 s3cmd sync /home/skumar/data_release/umgc/data_delivery s3://sunil-mor
 
 
+/projects/standard/vdl/vsingh/
+
+
 ### Avian H5 clade clasification ########
 https://clades.nextstrain.org/?dataset-name=community/moncla-lab/iav-h5/ha/all-clades
 
