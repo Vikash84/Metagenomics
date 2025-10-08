@@ -22,6 +22,8 @@ nextflow run doh-jdj0303/vaper -r v1.0 -profile singularity --input samplesheet.
 nextflow run doh-jdj0303/vaper -profile singularity --input samplesheet.csv --refs Orthoreovirus.tar.gz --cons_assembler irma --cons_assembly_type plurality --cons_allele_depth 1 --outdir vk_results --max_cpus 36 --max_memory 100.GB -resume
 nextflow run doh-jdj0303/vaper -r v1.0 -profile singularity --input samplesheet.csv --refs Orthoreovirus.tar.gz --cons_allele_depth 1 --outdir vk-results3 --max_cpus 36 --max_memory 100.GB -resume
 
+nextflow run Vikash84/vaper -profile singularity --input samplesheet.csv --refs ~/softwares/vaper_db/Orthoreovirus.tar.gz --cons_allele_depth 1 --outdir vk-results4 --max_cpus 36 --max_memory 100.GB -resume
+
 
 
 https://www.spaam-community.org/intro-to-ancient-metagenomics-book/functional-profiling.html
