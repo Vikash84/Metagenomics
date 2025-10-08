@@ -1,4 +1,4 @@
-nextflow run angelovangel/nextflow-kraken2 --readsdir .  --fqpattern *_R{1,2}_001.fastq.gz --kraken_db /home/vsingh/softwares/minikrake2_db/minikraken_8GB_20200312 --outdir test2
+nextflow run angelovangel/nextflow-kraken2 --readsdir .  --fqpattern "*_R{1,2}_001.fastq.gz" --kraken_db /home/vsingh/softwares/minikrake2_db/minikraken_8GB_20200312 --outdir test2
 
 nextflow run angelovangel/nextflow-kraken2 --readsdir . --fqpattern "*.fastq.gz" --kraken_db s3://genome-idx/kraken/minikraken_8GB_202003.tgz --outdir result3
 
