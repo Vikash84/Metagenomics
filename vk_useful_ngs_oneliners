@@ -485,6 +485,9 @@ for i in *refASM.fasta;do for j in lambda-A lambda-B lambda-C mu-A mu-B mu-NS si
 pigz *fastq
 
 
+orfipy reovirus-tim.fasta --start ATG --dna reo.fasta --min 960 --include-stop --outdir orfs_out
+
+
 
 
 
