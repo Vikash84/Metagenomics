@@ -690,7 +690,7 @@ bash octoFLU.sh /data/flu-sequence.fasta
 ########## nf-flu ############
 echo -e "sample,fastq_1,fastq_2" >> samplesheet.csv
 for i in *R1_001.fastq.gz;do echo -e "${i/_S*},`pwd`/$i,`pwd`/${i/R1/R2}" >> samplesheet.csv;done
-sudo nextflow run CFIA-NCFAD/nf-flu --input samplesheet.csv --platform illumina -profile docker
+nextflow run CFIA-NCFAD/nf-flu --input samplesheet.csv --platform illumina -profile singularity
 
 
 ## PCV3
